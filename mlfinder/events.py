@@ -336,6 +336,11 @@ class FindEvents():
         if gaia_check == True:
             gaia = self.stars.gaia_pointsource
             gaia_c = ['red' if x==1 else 'grey' for x in gaia]
+            
+            gaia_handle = mpatches.Patch(color='red', label=r'$Gaia$' + ' pointsource')
+            not_gaia_handle = mpatches.Patch(color='grey', label='Not a ' + r'$Gaia$' + ' pointsource')
+            
+            ax1.legend(handles=[gaia_handle, not_gaia_handle])
         
         else:
             gaia_c = 'grey'
