@@ -10,7 +10,7 @@ from mlfinder.bd import BrownDwarf
 
 # class for the fields (potentially either many or one)
 class Fields():
-    def __init__(self, which=None, ra = None, dec = None, bd = None):
+    def __init__(self, file, ra = None, dec = None, bd = None):
         self.which = which
         
         # brown dwarf can be ra/dec or data or class
@@ -37,19 +37,7 @@ class Fields():
             raise Exception('Brown Dwarf data needs to either be ra/dec, an astropy table or pandas table of the dwarf data, or the brown dwarf class.')
             
         # now to grab the star info
-        if which is None:
-            print('No field selected. Looking through them all.')
-            
-            self.fields = [] #ADD
-            
-        else:
-            self.fields = which
-            
-        # grabbing stars themselves
-        # self.stars = 
-        
-        
-        self.file = r'C:\Users\judah\candidate_stars_ephemerides\dr8\0855-0714_bs.txt'
+        self.file = file
         
         self.stars = pd.read_csv(self.file)
         self.stars = self.filter_stars_only(self.stars)
