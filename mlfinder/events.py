@@ -14,8 +14,8 @@ from scipy.interpolate import interp1d
 from PyAstronomy import pyasl
 
 # class imports
-from mlfinder import bd
-from mlfinder import fields
+from mlfinder.bd import BrownDwarf
+from mlfinder.fields import Fields
 
 # class to check for events
 class FindEvents():
