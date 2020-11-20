@@ -5,6 +5,9 @@ import pandas as pd
 import astropy
 from astropy.table import Table
 
+# import from module
+from mlfinder.bd import BrownDwarf
+
 # class for the fields (potentially either many or one)
 class Fields():
     def __init__(self, which=None, ra = None, dec = None, bd = None):
