@@ -1,91 +1,116 @@
+# basic imports
+import time
 
+import numpy as np
+import pandas as pd
+
+import astropy
+from astropy.table import Table
+from astropy.io import ascii
+from astropy.time import Time
+
+from PyAstronomy import pyasl
+
+from astroquery.jplhorizons import Horizons
+
+# misc. functions
+
+##
+# name: find_info
+#
+# inputs: brown dwarf astropy table with columns titled 'object name', ra', 'dec', 'mu_alpha', 'mu_delta', 'pi' 
+#         somewhere inside the table
+# outputs: df with only columns of needed inputs
+#
+# purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
+def find_info(df):
+    # keep certain columns
+    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'])
+    
+    return df
+  
 # create brown dwarf class
 class BrownDwarf():
-  def __init__(self, dataset):
-    self.dataset = dataset
+    def __init__(self, bd):
+        self.bd = bd
     
-    # find the path of the brown dwarf over the years
-    self.path = find_path()
-    
-    
-  ##
-  # name: path_list
-  #
-  # inputs: data from the brown dwarf (like initial position, parallax, etc) and ephemerides from JPL Horizons
-  # outputs: list of coordinates of the brown dwarf through time, ra and dec ends of brown dwarf (for plot resizing)
-  #
-  # purpose: function to grab the path of the brown dwarf with specified years
-  def find_path(self, eph_dict, start, end):
-    place_l = list()
-    coord_dict = dict()
-    
-    #first need to pull general data on brown dwarf and convert to arcseconds
-    a_0 = self.dataset[1] * 3600
-    d_0 = self.dataset[2] * 3600
-    
-    pi_trig = float(number_only(self.dataset[3])) / 1000
-    mu_a = float(number_only(self.dataset[4])) / 1000
-    mu_d = float(number_only(self.dataset[5])) / 1000
-    
-    #errors to add in if needed    
-    pi_trig_e = float(self.dataset[3][len(self.dataset[3])-4:]) / 1000
-    mu_a_e = float(self.dataset[4][len(self.dataset[4])-4:]) / 1000
-    mu_d_e = float(self.dataset[5][len(self.dataset[5])-4:]) / 1000
-    
-    if error == 'high':
-        pi_trig += pi_trig_e
-        mu_a += mu_a_e
-        mu_d += mu_d_e
-    elif error == 'low':
-        pi_trig -= pi_trig_e
-        mu_a -= mu_a_e
-        mu_d -= mu_d_e
+        # get basic data for the class
+        # first change df into what want
+        self.bd_cut= find_info(self.bd)
         
-    t_0 = start #when observations happened
+        # basic info
+        self.ra = bd['ra']
+        self.dec = bd['dec']
+        self.mu_a = bd['mu_alpha']
+        self.mu_d = bd['mu_delta']
+        self.pi = bd['pi']
     
-    #run through each ephemeride coordinate/time (time as months)
-    for coord in eph_dict:
-        #converting coord to year
-        t = Time(float(coord), format='jd')
-        t.format = 'jyear'
-        t = t.value
+    ##
+    # name: path_list
+    #
+    # inputs: data from the brown dwarf (like initial position, parallax, etc) and ephemerides from JPL Horizons
+    # outputs: list of coordinates of the brown dwarf through time, ra and dec ends of brown dwarf (for plot resizing)
+    #
+    # purpose: function to grab the path of the brown dwarf with specified years
+    def find_path(self, start, end, step='1month'):
+        # creating an empty pandas dataframe bc easiest to work with
+        coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
-        #cue formula for ra and dec at a given time.
+        #first need to pull general data on brown dwarf and convert to arcseconds
+        a_0 = float(self.bd_cut['ra']) * 3600
+        d_0 = float(self.bd_cut['dec']) * 3600
+
+        pi_trig = float(self.bd_cut['pi']) / 1000
+        mu_a = float(self.bd_cut['mu_alpha']) / 1000
+        mu_d = float(self.bd_cut['mu_delta']) / 1000
+
+        t_0 = float(start.split('-')[0]) #when observations happened
         
-        d_prime = d_0 + (mu_d * (t - t_0))
-        #converting d to rad
-        d_prime_r = float(d_prime / 206265)
+        # grab ephemerides in vector form
+        obj = Horizons(id='399', id_type='majorbody',
+                       epochs={'start':start, 'stop':end,
+                               'step':step})
 
-        a_prime = a_0 + (mu_a * (t - t_0) / (np.cos(d_prime_r)))
-        #convert a to rad
-        a_prime_r = float(a_prime / 206265)
+        vectors = obj.vectors()
+        vectors = vectors['targetname', 'datetime_jd', 'x', 'y', 'z']
 
-        a_t = a_prime + ((pi_trig * ((eph_dict[coord][0] * np.sin(a_prime_r)) - (eph_dict[coord][1] * np.cos(a_prime_r))) / np.cos(d_prime_r)))
-        d_t = d_prime + (pi_trig * ((eph_dict[coord][0] * np.cos(a_prime_r) * np.sin(d_prime_r)) + (eph_dict[coord][1] * np.sin(a_prime_r) * np.sin(d_prime_r)) - (eph_dict[coord][2] * np.cos(d_prime_r))))
+        #run through each ephemeride coordinate/time (time as months)
+        for coord in vectors:
+            #converting coord to year
+            t = Time(float(coord[1]), format='jd')
+            t.format = 'jyear'
+            t = t.value
+
+            #cue formula for ra and dec at a given time.
+
+            d_prime = d_0 + (mu_d * (t - t_0))
+            #converting d to rad
+            d_prime_r = float(d_prime / 206265)
+
+            a_prime = a_0 + (mu_a * (t - t_0) / (np.cos(d_prime_r)))
+            #convert a to rad
+            a_prime_r = float(a_prime / 206265)
+
+            a_t = a_prime + ((pi_trig * ((coord[2] * np.sin(a_prime_r)) - (coord[3] * np.cos(a_prime_r))) / np.cos(d_prime_r)))
+            d_t = d_prime + (pi_trig * ((coord[2] * np.cos(a_prime_r) * np.sin(d_prime_r)) + (coord[3] * np.sin(a_prime_r) * np.sin(d_prime_r)) - (coord[4] * np.cos(d_prime_r))))
+
+            # make delta a_t and d_t
+            a_t -= a_0
+            d_t -= d_0
+
+            #convert a_t and d_t to degrees
+            a_t = a_t / 3600
+            d_t = d_t / 3600
+
+            #add to the coord dataframe
+            coord_df = coord_df.append({'time': t, 'ra': a_t, 'dec': d_t}, ignore_index=True)
+
+        # put to BrownDwarf too
+        self.coord_df = coord_df
         
-        # make delta a_t and d_t
-        a_t -= a_0
-        d_t -= d_0
+        # add step, start, end because used for plotting in FindEvents()
+        self.step = step
+        self.start = start
+        self.end = end
         
-        #convert a_t and d_t to degrees
-        a_t = a_t / 3600
-        d_t = d_t / 3600
-        
-        #add to the coord_dict with format: coord_dict[time] = [RA, Dec]
-        coord_dict[t] = [a_t, d_t]
-    
-    #find list of alpha and dec to find the end points (for graphing purposes: to zoom into the path itself)
-    a_list = list()
-    d_list = list()
-    for i in coord_dict:
-        a_list.append(coord_dict[i][0])
-        d_list.append(coord_dict[i][1])
-    plt.scatter(a_list, d_list, s=0.5)
-
-    a_ends = [list(coord_dict.values())[0][0], list(coord_dict.values())[len(a_list) - 1][0]]
-    d_ends = [list(coord_dict.values())[0][1], list(coord_dict.values())[len(a_list) - 1][1]]
-    
-    #find mag_mu (for the title on the graph)
-    mag_mu = math.sqrt((math.pow(mu_a, 2) + math.pow(mu_d, 2)))
-
-    return coord_dict, a_ends, d_ends, mag_mu
+        return coord_df
