@@ -31,7 +31,7 @@ setup(name='mlfinder',
       author_email='jluberto@ucsc.edu',
       license='MIT',
       packages=find_packages(),
-      ],
+      ]
       },
       install_requires=INSTALL_REQUIRES,
       include_package_data=True,
