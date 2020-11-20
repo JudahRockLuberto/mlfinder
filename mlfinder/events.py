@@ -280,7 +280,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10)):
+    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
@@ -333,8 +333,12 @@ class FindEvents():
             ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=9)
             
         # plot the background stars
-        gaia = self.stars.gaia_pointsource
-        gaia_c = ['red' if x==1 else 'grey' for x in gaia]
+        if gaia_check == True:
+            gaia = self.stars.gaia_pointsource
+            gaia_c = ['red' if x==1 else 'grey' for x in gaia]
+        
+        else:
+            gaia_c = 'grey'
 
         bs_plot = ax1.scatter(self.stars.ra, self.stars.dec, s = 10, c = gaia_c)
         
