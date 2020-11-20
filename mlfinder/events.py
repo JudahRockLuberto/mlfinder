@@ -338,8 +338,8 @@ class FindEvents():
             gaia = self.stars.gaia_pointsource
             gaia_c = ['red' if x==1 else 'grey' for x in gaia]
             
-            gaia_handle = mpatches.Patch(color='red', label=r'$Gaia \textnormal{point source}$')
-            not_gaia_handle = mpatches.Patch(color='grey', label=r'$\textnormal{Not a} Gaia \textnormal{point source}$')
+            gaia_handle = mpatches.Patch(color='red', label='$\it{Gaia}$ point source')
+            not_gaia_handle = mpatches.Patch(color='grey', label='Not a $\it{Gaia}$ point source')
             
             ax1.legend(handles=[gaia_handle, not_gaia_handle])
         
