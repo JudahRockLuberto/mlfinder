@@ -11,8 +11,6 @@ from mlfinder.bd import BrownDwarf
 # class for the fields (potentially either many or one)
 class Fields():
     def __init__(self, file, ra = None, dec = None, bd = None):
-        self.which = which
-        
         # brown dwarf can be ra/dec or data or class
         if ra is not None and dec is not None:
             self.ra = ra
