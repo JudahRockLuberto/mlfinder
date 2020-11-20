@@ -1,6 +1,6 @@
 # taken from http://python-packaging.readthedocs.io/en/latest/everything.html and modified a little
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # random values
 __version__ = '0.1.0'
