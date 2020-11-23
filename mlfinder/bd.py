@@ -25,7 +25,7 @@ from astroquery.jplhorizons import Horizons
 # purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
 def find_info(df):
     # keep certain columns
-    df = df[['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi']]
+    df = df[['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']]
     
     return df
   
