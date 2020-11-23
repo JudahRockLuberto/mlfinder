@@ -328,7 +328,7 @@ class FindEvents():
         start_year = int(self.bd.start.split('-')[0])
         end_year = int(self.bd.end.split('-')[0])
         
-        years = range(start_year, end_year, years)
+        years = range(start_year, end_year+1, years)
         
         for i, txt in enumerate(years):
             ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=9)
