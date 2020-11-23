@@ -25,14 +25,16 @@ from astroquery.jplhorizons import Horizons
 # purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
 def find_info(df):
     # keep certain columns
-    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'])
+    df = df[['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi']]
     
     return df
   
 # create brown dwarf class
 class BrownDwarf():
     def __init__(self, bd):
-        self.bd = bd
+        # convert bd to pandas dataframe -- an initial np.array conversion should work
+        self.bd is pd.DataFrame(np.array(bd))
+            
     
         # get basic data for the class
         # first change df into what want
