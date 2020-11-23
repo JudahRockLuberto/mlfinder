@@ -321,7 +321,7 @@ class FindEvents():
         d_years = [i for i in self.bd.coord_df.dec if list(self.bd.coord_df.dec).index(i) % (years * measure_in_year) == 0]
         
         # plot year labels
-        ax1.scatter(a_years, d_years, s=5, c='blue', marker="D")
+        ax1.scatter(a_years, d_years, s=point_size+1, c='blue', marker="D")
 
         # adding text to 10 yr plot
         # finding placement to put plots based on change of ra/dec (10x more off with dec than ra bc of length of time)
