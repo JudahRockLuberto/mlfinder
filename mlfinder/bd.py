@@ -34,6 +34,8 @@ class BrownDwarf():
     def __init__(self, bd):
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         self.bd = pd.DataFrame(np.array(bd))
+        
+        print(self.bd)
             
     
         # get basic data for the class
