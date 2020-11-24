@@ -47,8 +47,7 @@ class BrownDwarf():
         
         # make bd have columns
         self.bd.columns = column_names
-            
-    
+        
         # get basic data for the class
         # first change df into what want
         self.bd_cut= find_info(self.bd)
