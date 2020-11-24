@@ -43,9 +43,9 @@ class FindEvents():
         # change stars into change from initial bd position
         print(self.bd.ra)
         print(self.stars.ra)
-        self.stars.ra = self.stars.ra - self.bd.ra
+        self.stars.ra = np.array(self.stars.ra) - self.bd.ra
         print(self.stars.ra)
-        self.stars.dec = self.stars.dec - self.bd.dec
+        self.stars.dec = np.array(self.stars.dec) - self.bd.dec
         
         # finding events
         self.event_table = self.find_events()
