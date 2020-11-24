@@ -52,12 +52,12 @@ class BrownDwarf():
         # first change df into what want
         self.bd_cut= find_info(self.bd)
         
-        # basic info
-        self.ra = bd['ra']
-        self.dec = bd['dec']
-        self.mu_a = bd['mu_alpha']
-        self.mu_d = bd['mu_delta']
-        self.pi = bd['pi']
+        # basic info (made weird bc pandas is weird)
+        self.ra = float(bd['ra'].values)
+        self.dec = float(bd['dec'].values)
+        self.mu_a = float(bd['mu_alpha'].values)
+        self.mu_d = float(bd['mu_delta'].values)
+        self.pi = float(bd['pi'].values)
     
     ##
     # name: path_list
