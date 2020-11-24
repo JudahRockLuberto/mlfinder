@@ -41,7 +41,9 @@ class FindEvents():
         self.events_per_year = self.events_per_year_calc()
         
         # change stars into change from initial bd position
+        print(self.stars.ra)
         self.stars.ra = self.stars.ra - self.bd.ra
+        print(self.stars.ra)
         self.stars.dec = self.stars.dec - self.bd.dec
         
         # finding events
