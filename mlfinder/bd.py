@@ -39,7 +39,7 @@ class BrownDwarf():
         if isinstance(bd, Table):
             column_names = bd.columns
             
-        if isinstance(bd, np.array):
+        if isinstance(bd, np.ndarray):
             column_names = ['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
