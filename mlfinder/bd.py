@@ -32,10 +32,21 @@ def find_info(df):
 # create brown dwarf class
 class BrownDwarf():
     def __init__(self, bd):
+        # grab column names before make bd an np.array() (bc takes away column names)
+        if isinstance(bd, pd.DataFrame):
+            column_names = bd.columns.values
+            
+        if isinstance(bd, Table):
+            column_names = bd.columns
+            
+        if isinstance(bd, np.array):
+            column_names = ['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']
+        
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         self.bd = pd.DataFrame(np.array(bd))
         
-        print(self.bd)
+        # make bd have columns
+        self.bd.columns = column_names
             
     
         # get basic data for the class
