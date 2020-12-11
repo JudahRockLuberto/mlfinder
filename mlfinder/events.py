@@ -344,7 +344,8 @@ class FindEvents():
             gaia_handle = mpatches.Patch(color='red', label='$\it{Gaia}$ point source')
             not_gaia_handle = mpatches.Patch(color='grey', label='Not a $\it{Gaia}$ point source')
             
-            ax1.legend(handles=[gaia_handle, not_gaia_handle])
+            if legend == True:
+                ax1.legend(handles=[gaia_handle, not_gaia_handle])
         
         else:
             gaia_c = 'grey'
