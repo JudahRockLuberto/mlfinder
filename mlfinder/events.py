@@ -281,7 +281,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10):
+    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
@@ -292,8 +292,8 @@ class FindEvents():
         ax1 = fig.add_axes([0.09, 0.09, 0.90, 0.90])
 
         # set titles
-        plt.xlabel(r'$ \Delta \alpha_{J2000, deg} $', fontsize=20)
-        plt.ylabel(r'$ \Delta \delta_{J2000, deg}$', fontsize=20)
+        plt.xlabel(r'$ \Delta \alpha_{J2000, deg} $', fontsize=label_size)
+        plt.ylabel(r'$ \Delta \delta_{J2000, deg}$', fontsize=label_size)
 
         # set limits +-zoom length. I had initially done based on change of ra and dec, but that scaled the plot weird
         path_length = pyasl.getAngDist(self.a_ends[0] / 3600, self.d_ends[0] / 3600, self.a_ends[1] / 3600, self.d_ends[1] / 3600) #angular difference in degrees
