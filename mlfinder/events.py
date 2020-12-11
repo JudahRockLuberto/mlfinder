@@ -311,8 +311,11 @@ class FindEvents():
         
         #make list of alpha and dec every 10 years and plot them with text as visual markers. easy to see in plot and see
         #direction the dwarf goes.   
-        measure_dict = {'1month': 12,
-                        '1day': 365,
+        measure_dict = {'1day': 365,
+                        '7days': 52,
+                        '1month': 12,
+                        '3months': 4,
+                        '4months': 3,
                         '1year' : 1}
         
         measure_in_year = measure_dict[self.bd.step]
