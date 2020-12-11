@@ -281,7 +281,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, point_size=10, font_size=10):
+    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
