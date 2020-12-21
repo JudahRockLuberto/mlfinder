@@ -23,13 +23,12 @@ from astroquery.jplhorizons import Horizons
 # purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
 def find_info(df, are_uncertainties):
     # keep certain columns
-    if all(are_uncertainties):
-        unc_columns = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
-            
-    else:
-        unc_columns = []
+    keep_col = ['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi']
     
-    df = df['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'] + unc_columns
+    if all(are_uncertainties):
+        keep_col += ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
+
+    df = df[keep_col]
     
     return df
   
