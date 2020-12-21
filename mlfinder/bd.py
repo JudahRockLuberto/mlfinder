@@ -12,6 +12,20 @@ from astropy.time import Time
 from PyAstronomy import pyasl
 
 from astroquery.jplhorizons import Horizons
+
+##
+# name: find_info
+#
+# inputs: brown dwarf astropy table with columns titled 'object name', ra', 'dec', 'mu_alpha', 'mu_delta', 'pi' 
+#         somewhere inside the table
+# outputs: df with only columns of needed inputs
+#
+# purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
+def find_info(df):
+    # keep certain columns
+    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'])
+    
+    return df
   
 # create brown dwarf class
 class BrownDwarf():
