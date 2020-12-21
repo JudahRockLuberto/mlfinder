@@ -34,7 +34,7 @@ def find_info(df, are_uncertainties):
   
 # create brown dwarf class
 class BrownDwarf():
-    def __init__(self, bd):
+    def __init__(self, bd, array_col_names=None):
         # grab column names before make bd an np.array() (bc takes away column names)
         if isinstance(bd, pd.DataFrame):
             column_names = bd.columns.values
@@ -43,7 +43,7 @@ class BrownDwarf():
             column_names = bd.columns
             
         if isinstance(bd, np.ndarray):
-            column_names = ['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']
+            column_names = array_col_names
             
         # check really quick if uncertainties in column names. If so, see that --all-- the uncertainties are there. else, return with issues
         uncertainties = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
