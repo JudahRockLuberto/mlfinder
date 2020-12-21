@@ -12,22 +12,6 @@ from astropy.time import Time
 from PyAstronomy import pyasl
 
 from astroquery.jplhorizons import Horizons
-
-# misc. functions
-
-##
-# name: find_info
-#
-# inputs: brown dwarf astropy table with columns titled 'object name', ra', 'dec', 'mu_alpha', 'mu_delta', 'pi' 
-#         somewhere inside the table
-# outputs: df with only columns of needed inputs
-#
-# purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
-def find_info(df):
-    # keep certain columns
-    df = df[['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']]
-    
-    return df
   
 # create brown dwarf class
 class BrownDwarf():
@@ -58,6 +42,22 @@ class BrownDwarf():
         self.mu_a = float(bd['mu_alpha'].values)
         self.mu_d = float(bd['mu_delta'].values)
         self.pi = float(bd['pi'].values)
+        
+        # also add in uncertainties if present
+        uncertainties = [('pm_ra' in column_names) and 
+                        ('pm_dec' in column_names) and 
+                        ('pm_pi' in column_names) and 
+                        ('pm_mu_alpha' in column_names) and
+                        ('pm_mu_delta' in column_names)]
+        
+        print(uncertainties)
+        if uncertainties:
+            print('here!')
+            self.pm_ra = float(bd['pm_ra'].values)
+            self.pm_dec = float(bd['pm_dec'].values)
+            self.pm_pi = float(bd['pm_pi'].values)
+            self.pm_mu_alpha = float(bd['pm_mu_alpha'].values)
+            self.pm_mu_delta = float(bd['pm_mu_delta'].values)
     
     ##
     # name: path_list
