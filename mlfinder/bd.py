@@ -23,7 +23,13 @@ from astroquery.jplhorizons import Horizons
 # purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
 def find_info(df):
     # keep certain columns
-    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'])
+    if all(are_uncertainties):
+        unc_columns = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
+            
+    else:
+        unc_columns = []
+    
+    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'] + unc_columns)
     
     return df
   
@@ -39,6 +45,14 @@ class BrownDwarf():
             
         if isinstance(bd, np.ndarray):
             column_names = ['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta']
+            
+        # check really quick if uncertainties in column names. If so, see that --all-- the uncertainties are there. else, return with issues
+        uncertainties = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
+        are_uncertainties = [True if i in uncertainties else False for i in column_names])
+        
+        if all(are_uncertainties) is False and any(are_uncertainties) is True:
+            print('You only have some of the uncertainty values. Either include them all, or include none. All needed for ensuring good probabilities.')
+            return None
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         self.bd = pd.DataFrame(np.array(bd))
@@ -48,7 +62,7 @@ class BrownDwarf():
         
         # get basic data for the class
         # first change df into what want
-        self.bd_cut= find_info(self.bd)
+        self.bd_cut= find_info(self.bd, are_uncertainties))
         
         # basic info (made weird bc pandas is weird)
         self.ra = float(bd['ra'].values)
@@ -58,15 +72,7 @@ class BrownDwarf():
         self.pi = float(bd['pi'].values)
         
         # also add in uncertainties if present
-        uncertainties = [('pm_ra' in column_names) and 
-                        ('pm_dec' in column_names) and 
-                        ('pm_pi' in column_names) and 
-                        ('pm_mu_alpha' in column_names) and
-                        ('pm_mu_delta' in column_names)]
-        
-        print(uncertainties)
-        if uncertainties:
-            print('here!')
+        if all(are_uncertainties):
             self.pm_ra = float(bd['pm_ra'].values)
             self.pm_dec = float(bd['pm_dec'].values)
             self.pm_pi = float(bd['pm_pi'].values)
