@@ -48,7 +48,7 @@ class BrownDwarf():
             
         # check really quick if uncertainties in column names. If so, see that --all-- the uncertainties are there. else, return with issues
         uncertainties = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
-        are_uncertainties = [True if i in uncertainties else False for i in column_names]
+        are_uncertainties = [True if i in column_names else False for i in uncertainties]
         
         if all(are_uncertainties) is False and any(are_uncertainties) is True:
             print('You only have some of the uncertainty values. Either include them all, or include none. All needed for ensuring good probabilities.')
