@@ -62,7 +62,7 @@ class BrownDwarf():
         
         # get basic data for the class
         # first change df into what want
-        self.bd_cut= find_info(self.bd, are_uncertainties))
+        self.bd_cut= find_info(self.bd, are_uncertainties)
         
         # basic info (made weird bc pandas is weird)
         self.ra = float(bd['ra'].values)
