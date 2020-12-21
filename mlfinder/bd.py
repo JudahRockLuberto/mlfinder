@@ -21,7 +21,7 @@ from astroquery.jplhorizons import Horizons
 # outputs: df with only columns of needed inputs
 #
 # purpose: used in BrownDwarf() and Fields() to pull info of the brown dwarf
-def find_info(df):
+def find_info(df, are_uncertainties):
     # keep certain columns
     if all(are_uncertainties):
         unc_columns = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
@@ -49,13 +49,6 @@ class BrownDwarf():
         # check really quick if uncertainties in column names. If so, see that --all-- the uncertainties are there. else, return with issues
         uncertainties = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
         are_uncertainties = [True if i in column_names else False for i in uncertainties]
-        
-        print(are_uncertainties)
-        print(column_names)
-        print(uncertainties)
-        
-        print(all(are_uncertainties))
-        print(any(are_uncertainties))
         
         if all(are_uncertainties) is False and any(are_uncertainties) is True:
             print('You only have some of the uncertainty values. Either include them all, or include none. All needed for ensuring good probabilities.')
