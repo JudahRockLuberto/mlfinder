@@ -29,7 +29,7 @@ def find_info(df, are_uncertainties):
     else:
         unc_columns = []
     
-    df.keep_columns(['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'] + unc_columns)
+    df = df['ra', 'dec', 'mu_alpha', 'mu_delta', 'pi'] + unc_columns
     
     return df
   
