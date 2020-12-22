@@ -75,8 +75,8 @@ class BrownDwarf():
             self.pm_ra = float(bd['pm_ra'].values)
             self.pm_dec = float(bd['pm_dec'].values)
             self.pm_pi = float(bd['pm_pi'].values)
-            self.pm_mu_alpha = float(bd['pm_mu_alpha'].values)
-            self.pm_mu_delta = float(bd['pm_mu_delta'].values)
+            self.pm_mu_a = float(bd['pm_mu_alpha'].values)
+            self.pm_mu_d = float(bd['pm_mu_delta'].values)
     
     ##
     # name: path_list
