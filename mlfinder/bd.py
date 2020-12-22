@@ -57,8 +57,9 @@ class BrownDwarf():
         # first reshape bd array to (1, len(bd)), so dataframe is horizontal
         print(bd)
         print(len(bd))
-        print(bd[0])
-        bd_reshaped = np.array(bd).reshape(1, len(bd))
+        print(column_names)
+        print(len(column_names)
+        bd_reshaped = np.array(bd).reshape(1, len(column_names))
         
         self.bd = pd.DataFrame(bd_reshaped)
         
