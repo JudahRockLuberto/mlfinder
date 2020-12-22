@@ -54,12 +54,12 @@ class BrownDwarf():
             return None
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
-        self.bd = pd.DataFrame(np.array(bd))
+        self.bd = pd.DataFrame(np.array(bd)).T
         
         # make bd have columns
-        print('bd', self.bd)
-        print('col', column_names)
         self.bd.columns = column_names
+        
+        print(bd.ra)
         
         # get basic data for the class
         # first change df into what want
