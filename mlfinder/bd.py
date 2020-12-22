@@ -55,9 +55,10 @@ class BrownDwarf():
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         # first reshape bd array to (1, len(bd)), so dataframe is horizontal
-
-        bd_reshaped = np.array(bd)
-        bd_reshaped = bd_reshaped.reshape(1, len(bd_reshaped))
+        print(bd)
+        print(len(bd))
+        print(bd[0])
+        bd_reshaped = np.array(bd).reshape(1, len(bd))
         
         self.bd = pd.DataFrame(bd_reshaped)
         
