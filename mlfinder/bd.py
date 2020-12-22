@@ -58,7 +58,7 @@ class BrownDwarf():
         print(bd)
         print(len(bd))
         print(column_names)
-        print(len(column_names)
+        print(len(column_names))
         bd_reshaped = np.array(bd).reshape(1, len(column_names))
         
         self.bd = pd.DataFrame(bd_reshaped)
