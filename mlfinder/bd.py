@@ -54,15 +54,13 @@ class BrownDwarf():
             return None
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
-        self.bd = pd.DataFrame(np.array(bd)).T
+        # first reshape bd array to (1, len(bd)), so dataframe is horizontal 
+        bd_reshaped = np.array(bd).reshape(1, len(bd))
         
-        print(self.bd)
-        print(column_names)
+        self.bd = pd.DataFrame(bd_reshaped)
         
         # make bd have columns
         self.bd.columns = column_names
-        
-        print(bd.ra)
         
         # get basic data for the class
         # first change df into what want
