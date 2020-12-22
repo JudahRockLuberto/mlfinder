@@ -67,19 +67,19 @@ class BrownDwarf():
         self.bd_cut= find_info(self.bd, are_uncertainties)
         
         # basic info
-        self.ra = float(bd.ra)
-        self.dec = float(bd.dec)
-        self.mu_a = float(bd.mu_alpha)
-        self.mu_d = float(bd.mu_delta)
-        self.pi = float(bd.pi)
+        self.ra = float(self.bd.ra)
+        self.dec = float(self.bd.dec)
+        self.mu_a = float(self.bd.mu_alpha)
+        self.mu_d = float(self.bd.mu_delta)
+        self.pi = float(self.bd.pi)
         
         # also add in uncertainties if present
         if all(are_uncertainties):
-            self.pm_ra = float(bd.pm_ra)
-            self.pm_dec = float(bd.pm_dec)
-            self.pm_pi = float(bd.pm_pi)
-            self.pm_mu_a = float(bd.pm_mu_alpha)
-            self.pm_mu_d = float(bd.pm_mu_delta)
+            self.pm_ra = float(self.bd.pm_ra)
+            self.pm_dec = float(self.bd.pm_dec)
+            self.pm_pi = float(self.bd.pm_pi)
+            self.pm_mu_a = float(self.bd.pm_mu_alpha)
+            self.pm_mu_d = float(self.bd.pm_mu_delta)
     
     ##
     # name: path_list
@@ -93,12 +93,12 @@ class BrownDwarf():
         coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
         #first need to pull general data on brown dwarf and convert to arcseconds
-        a_0 = float(self.bd_cut['ra']) * 3600
-        d_0 = float(self.bd_cut['dec']) * 3600
+        a_0 = self.ra * 3600
+        d_0 = self.dec * 3600
 
-        pi_trig = float(self.bd_cut['pi']) / 1000
-        mu_a = float(self.bd_cut['mu_alpha']) / 1000
-        mu_d = float(self.bd_cut['mu_delta']) / 1000
+        pi_trig = self.pi / 1000
+        mu_a = self.mu_alpha / 1000
+        mu_d = self.mu_delta / 1000
 
         t_0 = float(start.split('-')[0]) #when observations happened
         
