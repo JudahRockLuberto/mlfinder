@@ -97,8 +97,8 @@ class BrownDwarf():
         d_0 = self.dec * 3600
 
         pi_trig = self.pi / 1000
-        mu_a = self.mu_alpha / 1000
-        mu_d = self.mu_delta / 1000
+        mu_a = self.mu_a / 1000
+        mu_d = self.mu_d / 1000
 
         t_0 = float(start.split('-')[0]) #when observations happened
         
