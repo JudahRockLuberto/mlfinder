@@ -57,6 +57,8 @@ class BrownDwarf():
         self.bd = pd.DataFrame(np.array(bd))
         
         # make bd have columns
+        print('bd', self.bd)
+        print('col', column_names)
         self.bd.columns = column_names
         
         # get basic data for the class
