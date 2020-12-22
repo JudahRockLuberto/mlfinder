@@ -55,10 +55,6 @@ class BrownDwarf():
         
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         # first reshape bd array to (1, len(bd)), so dataframe is horizontal
-        print(bd)
-        print(len(bd))
-        print(column_names)
-        print(len(column_names))
         bd_reshaped = np.array(bd).reshape(1, len(column_names))
         
         self.bd = pd.DataFrame(bd_reshaped)
@@ -70,20 +66,20 @@ class BrownDwarf():
         # first change df into what want
         self.bd_cut= find_info(self.bd, are_uncertainties)
         
-        # basic info (made weird bc pandas is weird)
-        self.ra = float(bd['ra'].values)
-        self.dec = float(bd['dec'].values)
-        self.mu_a = float(bd['mu_alpha'].values)
-        self.mu_d = float(bd['mu_delta'].values)
-        self.pi = float(bd['pi'].values)
+        # basic info
+        self.ra = float(bd.ra)
+        self.dec = float(bd.dec)
+        self.mu_a = float(bd.mu_alpha)
+        self.mu_d = float(bd.mu_delta)
+        self.pi = float(bd.pi)
         
         # also add in uncertainties if present
         if all(are_uncertainties):
-            self.pm_ra = float(bd['pm_ra'].values)
-            self.pm_dec = float(bd['pm_dec'].values)
-            self.pm_pi = float(bd['pm_pi'].values)
-            self.pm_mu_a = float(bd['pm_mu_alpha'].values)
-            self.pm_mu_d = float(bd['pm_mu_delta'].values)
+            self.pm_ra = float(bd.pm_ra)
+            self.pm_dec = float(bd.pm_dec)
+            self.pm_pi = float(bd.pm_pi)
+            self.pm_mu_a = float(bd.pm_mu_alpha)
+            self.pm_mu_d = float(bd.pm_mu_delta)
     
     ##
     # name: path_list
