@@ -56,6 +56,9 @@ class BrownDwarf():
         # convert bd to pandas dataframe -- an initial np.array conversion should work
         self.bd = pd.DataFrame(np.array(bd)).T
         
+        print(self.bd)
+        print(column_names)
+        
         # make bd have columns
         self.bd.columns = column_names
         
