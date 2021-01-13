@@ -41,8 +41,8 @@ class FindEvents():
         self.events_per_year = self.events_per_year_calc()
         
         # change stars into change from initial bd position
-        self.stars.ra = self.stars.ra - self.bd.ra
-        self.stars.dec = self.stars.dec - self.bd.dec
+        self.stars_ra = self.stars.ra - self.bd.ra
+        self.stars_dec = self.stars.dec - self.bd.dec
         
         # finding events
         self.event_table = self.find_events()
@@ -214,8 +214,8 @@ class FindEvents():
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
             # do checks   
-            a_check = (abs(a_high - list(self.stars.ra)[i]) + abs(list(self.stars.ra)[i] - a_low)) == abs(a_high - a_low)
-            d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
+            a_check = (abs(a_high - list(self.stars_ra)[i]) + abs(list(self.stars_ra)[i] - a_low)) == abs(a_high - a_low)
+            d_check = (abs(d_high - list(self.stars_dec)[i]) + abs(list(self.stars_dec)[i] - d_low)) == abs(d_high - d_low)
             
             if a_check and d_check:
                 theta_min = np.inf
@@ -224,8 +224,8 @@ class FindEvents():
                 for index, row in self.coord_df.iterrows(): 
                     a_1 = row['ra'] # deg
                     d_1 = row['dec'] # deg
-                    a_2 = list(self.stars.ra)[i] # deg
-                    d_2 = list(self.stars.dec)[i] # deg
+                    a_2 = list(self.stars_ra)[i] # deg
+                    d_2 = list(self.stars_dec)[i] # deg
                     
                     theta = pyasl.getAngDist(a_1, d_1, a_2, d_2) #angular difference in degrees
                     theta *= 3600 #convert from degrees to arcseconds
@@ -350,7 +350,7 @@ class FindEvents():
         else:
             gaia_c = 'grey'
 
-        ax1.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
+        ax1.scatter(self.stars_ra, self.stars_dec, s = point_size, c = gaia_c)
         
         # plot the brown dwarf path 
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
