@@ -1,8 +1,16 @@
 # basic imports
-from PyAstronomy import pyasl
+import pandas as pd
+import numpy as np
 import math
+
 import matplotlib.pyplot as plt
 import corner
+
+from astropy.io import ascii
+from astropy.table import Table
+
+from PyAstronomy import pyasl
+
 
 # class imports
 from mlfinder.bd import BrownDwarf
