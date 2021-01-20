@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import corner
 
 # class imports
-from 
+from mlfinder.bd import BrownDwarf
+from mlfinder.fields import Fields
+from mlfinder.events import FindEvents
 
 class MonteCarlo():
     def __init__(self, bd, vary, events, which=0, samples=1000):
