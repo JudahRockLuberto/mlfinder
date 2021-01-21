@@ -86,10 +86,7 @@ class MonteCarlo():
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
-        for i in range(length):
-            if i % 100 == 0:
-                print(i)
-                
+        for i in range(length):                
             # grab data if needs to be indexed or not
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
