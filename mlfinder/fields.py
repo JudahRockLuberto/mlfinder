@@ -5,12 +5,16 @@ import pandas as pd
 import astropy
 from astropy.table import Table
 
+# imports from datalab (installation: https://datalab.noao.edu/docs/manual/UsingTheNOAODataLab/InstallDatalab/InstallDatalab.html)
+from dl import queryClient as qc
+from dl.helpers.utils import convert
+
 # import from module
 from mlfinder.bd import BrownDwarf
 
 # class for the fields (potentially either many or one)
 class Fields():
-    def __init__(self, file, ra = None, dec = None, bd = None):
+    def __init__(self, file=None, ra = None, dec = None, bd = None):
         # brown dwarf can be ra/dec or data or class
         if ra is not None and dec is not None:
             self.ra = ra
@@ -35,9 +39,21 @@ class Fields():
             raise Exception('Brown Dwarf data needs to either be ra/dec, an astropy table or pandas table of the dwarf data, or the brown dwarf class.')
             
         # now to grab the star info
-        self.file = file
+        if file == None:
+            q = """SELECT
+                        decals_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, gaia_pointsource, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
+                    /* the list of columns you want */
+                    FROM
+                        ls_dr7.tractor_primary /* the table you want to pull data from. This is their "source extracted" table, using the best data ("primary") */
+                    WHERE
+                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) /*uses columns "ra" and "dec" to only selection those within 10 arcmin (5./60 degrees) */""".format(359.3188514, +12.4609676)
+            res = qc.query(sql=q)
+            self.stars = convert(res,'pandas')
         
-        self.stars = pd.read_csv(self.file)
+        else:
+            self.file = file
+            self.stars = pd.read_csv(self.file)
+        
         self.stars = self.filter_stars_only(self.stars)
         self.stars = self.filter_stars_mag(self.stars)
      
