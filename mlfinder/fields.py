@@ -41,10 +41,10 @@ class Fields():
         # now to grab the star info
         if file == None:
             q = """SELECT
-                        decals_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, gaia_pointsource, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
+                        ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, gaia_pointsource, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
                     /* the list of columns you want */
                     FROM
-                        ls_dr7.tractor_primary /* the table you want to pull data from. This is their "source extracted" table, using the best data ("primary") */
+                        ls_dr8.tractor /* the table you want to pull data from. This is their "source extracted" table, using the best data ("primary") */
                     WHERE
                         't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) /*uses columns "ra" and "dec" to only selection those within 10 arcmin (5./60 degrees) */""".format(359.3188514, +12.4609676)
             res = qc.query(sql=q)
