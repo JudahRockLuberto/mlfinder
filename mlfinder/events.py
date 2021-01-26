@@ -510,3 +510,20 @@ class FindEvents():
         self.shift_fig = fig
 
         return fig
+
+    ##
+    # Name: event_mcmc
+    #
+    # inputs: which possible event, charteristics varying, number of samples
+    # outputs: array of mass uncertainties
+    #
+    # purpose: find the possibility of events
+    #
+    def event_mcmc(self, vary, which=0, samples=1000):
+        # create instance
+        mcmc = MonteCarlo(self.bd, vary, self.event_table, which, samples)
+        
+        # find mass uncertainties
+        uncertainties = mcmc.sampler()
+        
+        return uncertainties
