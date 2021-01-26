@@ -17,6 +17,7 @@ from PyAstronomy import pyasl
 # class imports
 from mlfinder.bd import BrownDwarf
 from mlfinder.fields import Fields
+from mlfinder.mcmc import MonteCarlo
 
 # class to check for events
 class FindEvents():
