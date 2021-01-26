@@ -18,7 +18,7 @@ from mlfinder.fields import Fields
 from mlfinder.events import FindEvents
 
 class MonteCarlo():
-    def __init__(self, bd, vary, events, which=0, samples=1000):
+    def __init__(self, bd, vary, event_table, which=0, samples=1000):
         # check if bd and fields are classes
         if not isinstance(bd, BrownDwarf):
             raise Exception('Brown dwarf must be an instance of the BrownDwarf() class.')
@@ -28,7 +28,7 @@ class MonteCarlo():
             
         # basic creation of class
         self.bd = bd
-        self.event = events.event_table.iloc[which]
+        self.event = event_table.iloc[which]
         
         self.samples = samples
         self.which = which
