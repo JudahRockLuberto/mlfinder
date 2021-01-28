@@ -212,7 +212,6 @@ class FindEvents():
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
 
         # run through each background star
-        theta_min = np.inf
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
             # do checks   
@@ -220,6 +219,8 @@ class FindEvents():
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
             
             if a_check and d_check:
+                theta_min = np.inf
+                
                 #run through each brown dwarf data point in path
                 for index, row in self.coord_df.iterrows(): 
                     a_1 = row['ra'] # deg
@@ -239,22 +240,22 @@ class FindEvents():
                         bd_ra = a_1
                         bd_dec = d_1
 
-                #find delta_ml for the smallest theta and add to dictionary.
-                delta_ml = self.delta_ml_calc(theta_min)
-                
-                # set up dict and add to df
-                star_info = self.stars.iloc[i]
-                star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
-                
-                value_dict = dict(star_info)
+        #find delta_ml for the smallest thetas and add to dictionary.
+        delta_ml = self.delta_ml_calc(theta_min)
 
-                value_dict['delta_ml'] = delta_ml
-                value_dict['time'] = time_of_min
-                value_dict['bd_ra'] = bd_ra
-                value_dict['bd_dec'] = bd_dec
-                value_dict['sep'] = theta_min
+        # set up dict and add to df
+        star_info = self.stars.iloc[i]
+        star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
 
-                close_df = close_df.append(value_dict, ignore_index=True)
+        value_dict = dict(star_info)
+
+        value_dict['delta_ml'] = delta_ml
+        value_dict['time'] = time_of_min
+        value_dict['bd_ra'] = bd_ra
+        value_dict['bd_dec'] = bd_dec
+        value_dict['sep'] = theta_min
+
+        close_df = close_df.append(value_dict, ignore_index=True)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
