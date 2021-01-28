@@ -266,7 +266,7 @@ class FindEvents():
                     # do the same thing as above, but for each brown dwarf that passes the checks. afterwards, check individual
                     # theta_temp_min and see if below self.theta_max
                     if theta < theta_temp_min:
-                        theta_temp_min = theta
+                        temp_theta_min = theta
                         time_of_temp_min = row['time']
                         
                         temp_index = i
