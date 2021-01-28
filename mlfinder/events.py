@@ -277,12 +277,12 @@ class FindEvents():
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
                     
-                    close_df = add_to_close(close_df, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
+                    close_df = self.add_to_close(close_df, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
                         
 
         # find delta_ml for the smallest thetas and add to dictionary.
         delta_ml = self.delta_ml_calc(theta_min)
-        close_df = add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
+        close_df = self.add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
