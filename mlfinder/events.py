@@ -298,8 +298,10 @@ class FindEvents():
                 close_df = close_df[index]
         
         # edit close_df ra and dec columns so no longer relative
+        print(close_df)
         close_df.ra += self.bd.ra
         close_df.dec += self.bd.dec
+        print(close_df)
         
         return close_df
     
