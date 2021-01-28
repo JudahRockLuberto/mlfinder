@@ -212,6 +212,7 @@ class FindEvents():
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
 
         # run through each background star
+        theta_min = np.inf
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
             # do checks   
@@ -219,8 +220,6 @@ class FindEvents():
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
             
             if a_check and d_check:
-                theta_min = np.inf
-                
                 #run through each brown dwarf data point in path
                 for index, row in self.coord_df.iterrows(): 
                     a_1 = row['ra'] # deg
