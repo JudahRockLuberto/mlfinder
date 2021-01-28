@@ -58,14 +58,11 @@ class FindEvents():
         # path
         coord_df = self.bd.coord_df
         
-        #ends of path
+        # ends of path
         self.a_ends = [coord_df.ra[0], coord_df.ra[len(coord_df.ra) - 1]]
         self.d_ends = [coord_df.dec[0], coord_df.dec[len(coord_df.dec) - 1]]
-
-        #uncertainty
-        #high_ends, low_ends, slopes = uncertainty_lines(star_data = candidate_stars[count], eph_dict = eph_dict_3)
         
-        #add to df holding all closest dwarf and background star pairs to call on later.
+        # add to df holding all closest dwarf and background star pairs to call on later.
         close_df = self.close_stars(a_ends = self.a_ends, d_ends = self.d_ends)
 
         return close_df
@@ -155,10 +152,34 @@ class FindEvents():
         return number, sigma
     
     ##
+    # Name: add_to_close
+    #
+    # inputs: dataframe to add to, separation, time of separataion, index of bs, ra of bs, dec of bs, mass uncertainty.
+    # outputs: updated dataframe
+    #
+    # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
+    #          and if theta < theta_min)
+    def add_to_close(close_df, theta, time, index, ra, dec, delta_ml):
+        # set up dict and add to df
+        star_info = self.stars.iloc[index]
+        star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
+
+        value_dict = dict(star_info)
+
+        value_dict['delta_ml'] = delta_ml
+        value_dict['time'] = time
+        value_dict['bd_ra'] = ra
+        value_dict['bd_dec'] = dec
+        value_dict['sep'] = theta
+
+        close_df = close_df.append(value_dict, ignore_index=True)
+        
+        return close_df
+
+    ##
     # Name: close_stars
     #
-    # inputs: background stars, path of brown dwarf, ends of brown dwarf (to cut the stars looked at for nearness to save time),
-    #         data from brown dwarf for a delta_ml calc, a theta_max for that specific brown dwarf if delta_ml is 4
+    # inputs: ends of brown dwarf (to cut the stars looked at for nearness to save time),
     # outputs: dictionary of dwarf and background star pairs that make the cut of closest and/or under theta_max
     #
     # purpose: to run close_star_find function and keep on adding to the radius until close_star_find can find a star with the 
@@ -212,14 +233,15 @@ class FindEvents():
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
 
         # run through each background star
+        theta_min = np.inf
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
             # do checks   
             a_check = (abs(a_high - list(self.stars.ra)[i]) + abs(list(self.stars.ra)[i] - a_low)) == abs(a_high - a_low)
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
             
-            if a_check and d_check:
-                theta_min = np.inf
+            if a_check and d_check:         
+                theta_temp_min = np.inf
                 
                 #run through each brown dwarf data point in path
                 for index, row in self.coord_df.iterrows(): 
@@ -231,31 +253,36 @@ class FindEvents():
                     theta = pyasl.getAngDist(a_1, d_1, a_2, d_2) #angular difference in degrees
                     theta *= 3600 #convert from degrees to arcseconds
 
-                    #if point is closer to background star than any point I have seen so far, make theta_min and record
-                    #which background star it is.
+                    # if point is closer to background star than any point I have seen so far, make theta_min and record
+                    # which background star it is.
                     if theta < theta_min:
                         theta_min = theta
                         time_of_min = row['time']
                         
-                        bd_ra = a_1
-                        bd_dec = d_1
+                        index = i
+                        
+                        bd_ra, bd_dec = a_1, d_1
+                        
+                    # do the same thing as above, but for each brown dwarf that passes the checks. afterwards, check individual
+                    # theta_temp_min and see if below self.theta_max
+                    if theta < theta_temp_min:
+                        theta_temp_min = theta
+                        time_of_temp_min = row['time']
+                        
+                        temp_index = i
+                        
+                        temp_bd_ra, temp_bd_dec = a_1, d_1
+                        
+                # to make sure I catch possible events smaller than theta_max
+                if theta < self.theta_max:
+                    temp_delta_ml = self.delta_ml_calc(temp_theta_min)
+                    
+                    close_df = add_to_close(close_df, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
+                        
 
-        #find delta_ml for the smallest thetas and add to dictionary.
+        # find delta_ml for the smallest thetas and add to dictionary.
         delta_ml = self.delta_ml_calc(theta_min)
-
-        # set up dict and add to df
-        star_info = self.stars.iloc[i]
-        star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
-
-        value_dict = dict(star_info)
-
-        value_dict['delta_ml'] = delta_ml
-        value_dict['time'] = time_of_min
-        value_dict['bd_ra'] = bd_ra
-        value_dict['bd_dec'] = bd_dec
-        value_dict['sep'] = theta_min
-
-        close_df = close_df.append(value_dict, ignore_index=True)
+        close_df = add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
@@ -270,6 +297,10 @@ class FindEvents():
                 index = close_df.sep.index(min(close_df.sep))
 
                 close_df = close_df[index]
+        
+        # edit close_df ra and dec columns so no longer relative
+        close_df.ra += self.bd.ra
+        close_df.dec += self.bd.dec
         
         return close_df
     
