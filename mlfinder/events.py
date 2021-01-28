@@ -159,7 +159,7 @@ class FindEvents():
     #
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
-    def add_to_close(close_df, theta, time, index, ra, dec, delta_ml):
+    def add_to_close(self, close_df, theta, time, index, ra, dec, delta_ml):
         # set up dict and add to df
         star_info = self.stars.iloc[index]
         star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
@@ -276,7 +276,6 @@ class FindEvents():
                 # to make sure I catch possible events smaller than theta_max
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
-                    
                     close_df = self.add_to_close(close_df, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
                         
 
