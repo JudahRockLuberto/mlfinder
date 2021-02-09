@@ -331,6 +331,7 @@ class FindEvents():
         # set titles
         plt.xlabel(r'$ \Delta \alpha_{J2000, deg} $', fontsize=label_size)
         plt.ylabel(r'$ \Delta \delta_{J2000, deg}$', fontsize=label_size)
+        plt.title(str(self.bd.bd.object_name), fontsize=label_size)
 
         # set limits +-zoom length. I had initially done based on change of ra and dec, but that scaled the plot weird
         path_length = pyasl.getAngDist(self.a_ends[0] / 3600, self.d_ends[0] / 3600, self.a_ends[1] / 3600, self.d_ends[1] / 3600) #angular difference in degrees
