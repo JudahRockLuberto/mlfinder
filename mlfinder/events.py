@@ -159,13 +159,14 @@ class FindEvents():
     #
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
-    def add_to_close(self, close_df, theta, time, index, ra, dec, delta_ml):
+    def add_to_close(self, close_df, object_name, theta, time, index, ra, dec, delta_ml):
         # set up dict and add to df
         star_info = self.stars.iloc[index]
         star_info = star_info[['decals_id', 'ra', 'dec', 'dered_mag_r', 'gaia_pointsource']]
 
         value_dict = dict(star_info)
-
+        
+        value_dict['object_name'] = object_name
         value_dict['delta_ml'] = delta_ml
         value_dict['time'] = time
         value_dict['bd_ra'] = ra
@@ -225,7 +226,7 @@ class FindEvents():
         columns = [i for i in columns if i in ['decals_id', 'ra', 'dec', 'dered_mag_r', 
                                                'gaia_duplicated source', 'gaia_pointsource']]
 
-        columns.extend(['time', 'bd_ra', 'bd_dec', 'sep'])
+        columns.extend(['object_name', 'time', 'bd_ra', 'bd_dec', 'sep'])
 
         close_df = pd.DataFrame(columns=columns)
         
@@ -276,14 +277,14 @@ class FindEvents():
                 # to make sure I catch possible events smaller than theta_max
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
-                    close_df = self.add_to_close(close_df, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
+                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
                         
 
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
         if theta_min != np.inf:
             delta_ml = self.delta_ml_calc(theta_min)
-            close_df = self.add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
+            close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
