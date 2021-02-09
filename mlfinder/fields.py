@@ -17,6 +17,7 @@ class Fields():
     def __init__(self, file=None, ra = None, dec = None, bd = None):
         # brown dwarf can be ra/dec or data or class
         if ra is not None and dec is not None:
+            print(here)
             self.ra = ra
             self.dec = dec
         
@@ -46,7 +47,7 @@ class Fields():
                     FROM
                         ls_dr8.tractor
                     WHERE
-                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) """.format(self.ra, self.dec)
+                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) """.format(float(self.ra), float(self.dec))
             res = qc.query(sql=q)
             self.stars = convert(res,'pandas')
         
