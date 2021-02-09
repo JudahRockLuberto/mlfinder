@@ -256,7 +256,6 @@ class FindEvents():
                     # if point is closer to background star than any point I have seen so far, make theta_min and record
                     # which background star it is.
                     if theta < theta_min:
-                        print('here!!')
                         theta_min = theta
                         time_of_min = row['time']
                         
@@ -281,8 +280,10 @@ class FindEvents():
                         
 
         # find delta_ml for the smallest thetas and add to dictionary.
-        delta_ml = self.delta_ml_calc(theta_min)
-        close_df = self.add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
+        # but only do it if goes within the checks (sometimes doesn't)
+        if theta_min != np.inf:
+            delta_ml = self.delta_ml_calc(theta_min)
+            close_df = self.add_to_close(close_df, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
@@ -297,13 +298,13 @@ class FindEvents():
                 index = close_df.sep.index(min(close_df.sep))
 
                 close_df = close_df[index]
-        
-        # edit close_df ra and dec columns so no longer relative
-        close_df.ra += self.bd.ra
-        close_df.dec += self.bd.dec
-        
-        close_df.bd_ra += self.bd.ra
-        close_df.bd_dec += self.bd.dec
+
+            # edit close_df ra and dec columns so no longer relative
+            close_df.ra += self.bd.ra
+            close_df.dec += self.bd.dec
+
+            close_df.bd_ra += self.bd.ra
+            close_df.bd_dec += self.bd.dec
         
         return close_df
     
