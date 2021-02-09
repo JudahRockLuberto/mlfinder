@@ -46,7 +46,7 @@ class Fields():
                     FROM
                         ls_dr8.tractor /* the table you want to pull data from. This is their "source extracted" table, using the best data ("primary") */
                     WHERE
-                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) /*uses columns "ra" and "dec" to only selection those within 10 arcmin (5./60 degrees) */""".format(359.3188514, +12.4609676)
+                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) /*uses columns "ra" and "dec" to only selection those within 10 arcmin (5./60 degrees) */""".format(self.ra, self.dec)
             res = qc.query(sql=q)
             self.stars = convert(res,'pandas')
         
