@@ -256,6 +256,7 @@ class FindEvents():
                     # if point is closer to background star than any point I have seen so far, make theta_min and record
                     # which background star it is.
                     if theta < theta_min:
+                        print('here!!')
                         theta_min = theta
                         time_of_min = row['time']
                         
