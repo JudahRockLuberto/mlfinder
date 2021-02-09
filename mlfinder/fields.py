@@ -17,7 +17,6 @@ class Fields():
     def __init__(self, file=None, ra = None, dec = None, bd = None):
         # brown dwarf can be ra/dec or data or class
         if ra is not None and dec is not None:
-            print(here)
             self.ra = ra
             self.dec = dec
         
