@@ -469,7 +469,7 @@ class FindEvents():
             
             # loop through each mjup and add it to temp_dict for each mass
             for j in range(len(mjups)):
-                theta = pyasl.getAngDist(row.ra, row.dec, list(self.event_table.bd_ra)[which] - list(self.event_table.ra)[which], list(self.event_table.bd_dec)[which] - list(self.event_table.dec)[which])
+                theta = pyasl.getAngDist(row.ra + list(self.event_table.ra)[which], row.dec + list(self.event_table.dec)[which], list(self.event_table.bd_ra)[which] , list(self.event_table.bd_dec)[which])
 
                 #convert from degrees to mas
                 theta *=  3600 * 1000
