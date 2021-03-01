@@ -278,8 +278,9 @@ class FindEvents():
                 # to make sure I catch possible events smaller than theta_max
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
+                    print('here!')
                     close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
-                        
+                    print(self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
 
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
