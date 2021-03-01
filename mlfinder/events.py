@@ -279,6 +279,8 @@ class FindEvents():
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
                     print('here!')
+                    print('theta max', self.theta_max)
+                    print('theta', theta)
                     close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
                     print(self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
 
