@@ -462,7 +462,7 @@ class FindEvents():
         # calculate for all the masses and have their centroid shifts
         # create the dataframe
         shift_df = pd.DataFrame(columns=['time'] + ['shift_' + str(mass) for mass in mjups])
-
+        theta_list = list()
         for index, row in self.bd.coord_df.iterrows():
             # create dict of a row for the df
             temp_dict = {'time' : row.time}
@@ -474,7 +474,7 @@ class FindEvents():
                 #convert from degrees to mas
                 theta *=  3600 * 1000
                 theta_norm = theta / einstein_radii[j]
-
+                theta_list.append(theta)
                 shift = ((einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
                 
@@ -483,6 +483,7 @@ class FindEvents():
             # add each row to the df
             shift_df = shift_df.append(temp_dict, ignore_index=True)    
             
+        self.theta_list = theta_list
         self.shift_df = shift_df
 
         return shift_df
