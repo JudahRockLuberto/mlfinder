@@ -263,6 +263,7 @@ class FindEvents():
                         index = i
                         
                         bd_ra, bd_dec = a_1, d_1
+                        bs_ra, bs_dec = a_2, d_2
                         
                     # do the same thing as above, but for each brown dwarf that passes the checks. afterwards, check individual
                     # theta_temp_min and see if below self.theta_max
@@ -284,6 +285,8 @@ class FindEvents():
         # but only do it if goes within the checks (sometimes doesn't)
         if theta_min != np.inf:
             delta_ml = self.delta_ml_calc(theta_min)
+            print('close df', close_df)
+            print('bs info', bs_ra, bs_dec, time_of_min) 
             close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
@@ -462,7 +465,6 @@ class FindEvents():
         # calculate for all the masses and have their centroid shifts
         # create the dataframe
         shift_df = pd.DataFrame(columns=['time'] + ['shift_' + str(mass) for mass in mjups])
-        theta_list = list()
         for index, row in self.bd.coord_df.iterrows():
             # create dict of a row for the df
             temp_dict = {'time' : row.time}
@@ -470,16 +472,11 @@ class FindEvents():
             # loop through each mjup and add it to temp_dict for each mass
             for j in range(len(mjups)):
                 theta = pyasl.getAngDist(row.ra + list(self.event_table.bd_ra)[which], row.dec + list(self.event_table.bd_dec)[which], list(self.event_table.ra)[which] , list(self.event_table.dec)[which])
-                print('values', row.ra + list(self.event_table.bd_ra)[which], row.dec + list(self.event_table.bd_dec)[which], list(self.event_table.ra)[which] , list(self.event_table.dec)[which])
-                print('theta deg', theta)
-                print('theta mas', theta * 3600 * 1000)
-                
+
                 #convert from degrees to mas
                 theta *=  3600 * 1000
-
                 theta_norm = theta / einstein_radii[j]
-                print('theta_norm', theta_norm)
-                theta_list.append(theta)
+                
                 shift = ((einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
                 
