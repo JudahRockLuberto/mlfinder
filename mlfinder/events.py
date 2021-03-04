@@ -265,6 +265,8 @@ class FindEvents():
                         bd_ra, bd_dec = a_1, d_1
                         bs_ra, bs_dec = a_2, d_2
                         
+                        print('bs', a_2, d_2)
+                        
                     # do the same thing as above, but for each brown dwarf that passes the checks. afterwards, check individual
                     # theta_temp_min and see if below self.theta_max
                     if theta < theta_temp_min:
@@ -278,11 +280,8 @@ class FindEvents():
                 # to make sure I catch possible events smaller than theta_max
                 if theta < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
-                    print('here!')
-                    print('theta max', self.theta_max)
-                    print('theta', theta)
+                    
                     close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
-                    print(self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
 
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
