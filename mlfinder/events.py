@@ -276,9 +276,10 @@ class FindEvents():
                         temp_index = i
                         
                         temp_bd_ra, temp_bd_dec = a_1, d_1
+                        temp_bs_ra, temp_bs_dec = a_2, d_2
                         
                 # to make sure I catch possible events smaller than theta_max
-                if theta < self.theta_max:
+                if temp_theta_min < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
                     
                     close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_temp_min, time_of_temp_min, temp_index, temp_bd_ra, temp_bd_dec, temp_delta_ml)
@@ -287,8 +288,7 @@ class FindEvents():
         # but only do it if goes within the checks (sometimes doesn't)
         if theta_min != np.inf:
             delta_ml = self.delta_ml_calc(theta_min)
-            print('close df', close_df)
-            print('bs info', bs_ra, bs_dec, time_of_min) 
+            
             close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, time_of_min, index, bd_ra, bd_dec, delta_ml)
 
         # now to find smallest sep in df or if lower than theta_max
