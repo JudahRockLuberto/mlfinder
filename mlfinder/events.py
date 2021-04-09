@@ -210,7 +210,7 @@ class FindEvents():
         d_high = d_ends[1] + (radius * (d_ends[1] - d_ends[0]))
         
         # make initial close_df
-        close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'decals_id', 'bs_ra', 'bs_dec', 'mag', 'gaia_pointsource')
+        close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'decals_id', 'bs_ra', 'bs_dec', 'mag', 'gaia_pointsource'])
         
         #The process for this function was to find the theta_min for any background star within the RA and Dec range found
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
