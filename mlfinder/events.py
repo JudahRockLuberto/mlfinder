@@ -242,9 +242,9 @@ class FindEvents():
                         theta_min = theta
                         time_of_min = row['time']
                         
-                        decals_id = row['decals_id']
-                        mag = row['dered_mag_r']
-                        gaia_pointsource = row['gaia_pointsource']
+                        decals_id = list(self.decals_id)[i]
+                        mag = list(self.stars.dered_mag_r)[i]
+                        gaia_pointsource = list(self.stars.gaia_pointsource)[i]
                         
                         bd_ra, bd_dec = a_1, d_1
                         bs_ra, bs_dec = a_2, d_2
@@ -255,9 +255,9 @@ class FindEvents():
                         temp_theta_min = theta
                         time_of_temp_min = row['time']
                         
-                        temp_decals_id = row['decals_id']
-                        temp_mag = row['dered_mag_r']
-                        temp_gaia_pointsource = row['gaia_pointsource']
+                        temp_decals_id = list(self.decals_id)[i]
+                        temp_mag = list(self.stars.dered_mag_r)[i]
+                        temp_gaia_pointsource = list(self.stars.gaia_pointsource)[i]
                         
                         temp_bd_ra, temp_bd_dec = a_1, d_1
                         temp_bs_ra, temp_bs_dec = a_2, d_2
