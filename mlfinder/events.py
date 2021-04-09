@@ -159,13 +159,13 @@ class FindEvents():
     #
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
-    def add_to_close(self, object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource):
+    def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource):
         # set up array and add to df
         value_array = np.array([object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource])
 
-        self.close_df.append(value_array, ignore_index=True)
+        close_df.append(value_array, ignore_index=True)
         
-        return self.close_df
+        return close_df
         
     ##
     # Name: close_stars
@@ -266,14 +266,14 @@ class FindEvents():
                 if temp_theta_min < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
                     
-                    close_df = self.add_to_close(self.bd.bd.object_name, temp_theta_min, temp_delta_ml, temp_bd_ra, temp_bd_dec, temp_decals_id, temp_bs_ra, temp_bs_dec, temp_mag, temp_gaia_pointsource)
+                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, temp_theta_min, temp_delta_ml, temp_bd_ra, temp_bd_dec, temp_decals_id, temp_bs_ra, temp_bs_dec, temp_mag, temp_gaia_pointsource)
                                                  
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
         if theta_min != np.inf:                         
             delta_ml = self.delta_ml_calc(theta_min)
 
-            close_df = self.add_to_close(self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource)
+            close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
