@@ -160,13 +160,21 @@ class FindEvents():
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
     def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource):
-        # set up array and add to df
-        value_array = np.array([object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource])
+        # set up dictionary and add to df
+        value_dict = {'object_name': object_name,
+                      'sep': sep,
+                      'delta_m': delta_m,
+                      'bd_ra': bd_ra,
+                      'bd_dec': bd_dec,
+                      'decals_id': decals_id,
+                      'bs_ra': bs_ra,
+                      'bs_dec': bs_dec,
+                      'mag': mag,
+                      'gaia_pointsource': gaia_pointsource
+                     }
 
-        close_df.append(value_array, ignore_index=True)
-        
-        return close_df
-        
+        return close_df.append(value_dict, ignore_index=True)
+       
     ##
     # Name: close_stars
     #
