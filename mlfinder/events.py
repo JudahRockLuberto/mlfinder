@@ -78,7 +78,7 @@ class FindEvents():
     #
     def theta_max_calc(self):
         # get parallax and astrometric precision.
-        parallax = float(self.bd.bd_cut['pi'])
+        parallax = float(self.bd.bd_cut['pi']) / 1000 # arcseconds
 
         astro_precision = 0.2 #cushings example
 
