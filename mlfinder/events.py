@@ -296,7 +296,7 @@ class FindEvents():
                 close_df = close_df.iloc[indices,:]
 
             else:
-                index = close_df.sep.index(min(close_df.sep))
+                index = list(close_df.sep).index(min(close_df.sep))
 
                 close_df = close_df[index]
 
