@@ -130,10 +130,6 @@ class BrownDwarf():
             a_t = a_prime + ((pi_trig * ((coord[2] * np.sin(a_prime_r)) - (coord[3] * np.cos(a_prime_r))) / np.cos(d_prime_r)))
             d_t = d_prime + (pi_trig * ((coord[2] * np.cos(a_prime_r) * np.sin(d_prime_r)) + (coord[3] * np.sin(a_prime_r) * np.sin(d_prime_r)) - (coord[4] * np.cos(d_prime_r))))
 
-            # make delta a_t and d_t
-            a_t -= a_0
-            d_t -= d_0
-
             #convert a_t and d_t to degrees
             a_t = a_t / 3600
             d_t = d_t / 3600
