@@ -156,14 +156,14 @@ class FindEvents():
     #
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
-    def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min):
+    def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min):
         # set up dictionary and add to df
         value_dict = {'object_name': object_name,
                       'sep': sep,
                       'delta_m': delta_m,
                       'bd_ra': bd_ra,
                       'bd_dec': bd_dec,
-                      'decals_id': decals_id,
+                      'ls_id': ls_id,
                       'bs_ra': bs_ra,
                       'bs_dec': bs_dec,
                       'mag': mag,
@@ -216,7 +216,7 @@ class FindEvents():
         d_high = d_ends[1] + (radius * (d_ends[1] - d_ends[0]))
         
         # make initial close_df
-        close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'decals_id', 'bs_ra', 'bs_dec', 'mag', 'gaia_pointsource', 'time_of_min'])
+        close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'gaia_pointsource', 'time_of_min'])
         
         #The process for this function was to find the theta_min for any background star within the RA and Dec range found
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
@@ -248,7 +248,7 @@ class FindEvents():
                         theta_min = theta
                         time_of_min = row['time']
                         
-                        decals_id = list(self.stars.decals_id)[i]
+                        ls_id = list(self.stars.ls_id)[i]
                         mag = list(self.stars.dered_mag_r)[i]
                         gaia_pointsource = list(self.stars.gaia_pointsource)[i]
                         
@@ -261,7 +261,7 @@ class FindEvents():
                         temp_theta_min = theta
                         time_of_temp_min = row['time']
                         
-                        temp_decals_id = list(self.stars.decals_id)[i]
+                        temp_ls_id = list(self.stars.ls_id)[i]
                         temp_mag = list(self.stars.dered_mag_r)[i]
                         temp_gaia_pointsource = list(self.stars.gaia_pointsource)[i]
                         
@@ -272,14 +272,14 @@ class FindEvents():
                 if temp_theta_min < self.theta_max:
                     temp_delta_ml = self.delta_ml_calc(temp_theta_min)
                     
-                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, temp_theta_min, temp_delta_ml, temp_bd_ra, temp_bd_dec, temp_decals_id, temp_bs_ra, temp_bs_dec, temp_mag, temp_gaia_pointsource, time_of_temp_min)
+                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, temp_theta_min, temp_delta_ml, temp_bd_ra, temp_bd_dec, temp_ls_id, temp_bs_ra, temp_bs_dec, temp_mag, temp_gaia_pointsource, time_of_temp_min)
                                                  
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
         if theta_min != np.inf:                         
             delta_ml = self.delta_ml_calc(theta_min)
 
-            close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min)
+            close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min)
 
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
