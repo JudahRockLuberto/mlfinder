@@ -299,12 +299,6 @@ class FindEvents():
 
                 close_df = close_df.loc[index]
             """
-            # edit close_df ra and dec columns so no longer relative
-            close_df.bs_ra += self.bd.ra
-            close_df.bs_dec += self.bd.dec
-
-            close_df.bd_ra += self.bd.ra
-            close_df.bd_dec += self.bd.dec
         
         return close_df
     
