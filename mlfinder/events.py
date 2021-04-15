@@ -32,6 +32,7 @@ class FindEvents():
         # basic creation of class
         self.bd = bd
         self.stars = fields.stars
+        print(self.stars.columns)
         
         self.m_jup_prec = precision
         
@@ -246,7 +247,7 @@ class FindEvents():
                     if theta < theta_min:
                         theta_min = theta
                         time_of_min = row['time']
-                        print(self.stars)
+                        
                         decals_id = list(self.stars.decals_id)[i]
                         mag = list(self.stars.dered_mag_r)[i]
                         gaia_pointsource = list(self.stars.gaia_pointsource)[i]
