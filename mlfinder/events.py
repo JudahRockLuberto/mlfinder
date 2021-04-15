@@ -41,10 +41,6 @@ class FindEvents():
         self.theta_max = self.theta_max_calc()
         self.events_per_year = self.events_per_year_calc()
         
-        # change stars into change from initial bd position
-        self.stars.ra = self.stars.ra - self.bd.ra
-        self.stars.dec = self.stars.dec - self.bd.dec
-        
         # finding events
         self.event_table = self.find_events()
         
