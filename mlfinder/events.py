@@ -32,7 +32,6 @@ class FindEvents():
         # basic creation of class
         self.bd = bd
         self.stars = fields.stars
-        print(self.stars.columns)
         
         self.m_jup_prec = precision
         
