@@ -284,7 +284,8 @@ class FindEvents():
             delta_ml = self.delta_ml_calc(theta_min)
 
             close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, decals_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min)
-
+    
+        """
         # now to find smallest sep in df or if lower than theta_max
         # find indices real quick
         if len(close_df) != 0:
@@ -298,7 +299,7 @@ class FindEvents():
                 index = list(close_df.sep).index(min(close_df.sep))
 
                 close_df = close_df.loc[index]
-
+            """
             # edit close_df ra and dec columns so no longer relative
             close_df.bs_ra += self.bd.ra
             close_df.bs_dec += self.bd.dec
