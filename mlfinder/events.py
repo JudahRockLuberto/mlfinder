@@ -232,7 +232,8 @@ class FindEvents():
             a_check = (abs(a_high - list(self.stars.ra)[i]) + abs(list(self.stars.ra)[i] - a_low)) == abs(a_high - a_low)
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
             
-            if a_check and d_check:         
+            if a_check and d_check:
+                print('incheck!')
                 theta_temp_min = np.inf
                 
                 #run through each brown dwarf data point in path
