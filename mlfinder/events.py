@@ -462,7 +462,7 @@ class FindEvents():
             
             # loop through each mjup and add it to temp_dict for each mass
             for j in range(len(mjups)):
-                theta = pyasl.getAngDist(row.ra + list(self.event_table.bd_ra)[which], row.dec + list(self.event_table.bd_dec)[which], list(self.event_table.bs_ra)[which] , list(self.event_table.bs_dec)[which])
+                theta = pyasl.getAngDist(row.ra, row.dec, list(self.event_table.bs_ra)[which] , list(self.event_table.bs_dec)[which])
 
                 #convert from degrees to mas
                 theta *=  3600 * 1000
@@ -533,7 +533,7 @@ class FindEvents():
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
         # make axis to 2 * time difference
-        ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
+        #ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
 
         # set tick lables and the like
         ax1.ticklabel_format(useOffset=False)
