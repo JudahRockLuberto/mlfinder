@@ -91,7 +91,7 @@ class MonteCarlo():
             bd_path = bd_new.find_path(start=self.bd.start, end=self.bd.end, step=self.bd.step)
             
             # take star info from event table and the brown dwarf path to find a list of distance
-            separations = [pyasl.getAngDist(row.ra, row.dec, self.event.ra, self.event.dec) * 3600 for index, row in bd_path.iterrows()]
+            separations = [pyasl.getAngDist(row.ra, row.dec, self.event.bs_ra, self.event.bs_dec) * 3600 for index, row in bd_path.iterrows()]
             
             # get minimum distance and calculate the mass uncertainty
             min_separation = min(separations)
