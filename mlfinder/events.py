@@ -504,11 +504,13 @@ class FindEvents():
         ax1.tick_params(axis='both', labelsize=16)
         
         # lines for centroid shift plot
+        """
         ax1.axvline(2021.7479)
         ax1.axvline(2022.7452)
         
         ax1.axvspan(2020.5325119780969, 2020.6830937713892, color='red', alpha=0.3)
         ax1.axvspan(2021.5345653661875, 2021.68514715948, color='red', alpha=0.3)
+        """
 
         # add an arbitrary number of shifts after interpolating
         for i in range(len(self.shift_df.columns) - 1):
