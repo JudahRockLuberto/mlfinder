@@ -75,7 +75,7 @@ class MonteCarlo():
         all_data = [np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data]
 
         # find rang to run through
-        placement = {'ra':0, 'dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
+        placement = {'bd_ra':0, 'bd_dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
         
         vary_index = placement[self.vary[0]]
         length = len(all_data[vary_index])
