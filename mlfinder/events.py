@@ -469,7 +469,7 @@ class FindEvents():
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
                 
                 temp_dict_shift['shift_{}'.format(str(mjups[j]))] = shift
-                temp_dict_mag['shift_{}'.format(str(mjups[j]))] = mag
+                temp_dict_mag['mag_{}'.format(str(mjups[j]))] = mag
                 theta_list.append(theta)
                 
             # add each row to the df
