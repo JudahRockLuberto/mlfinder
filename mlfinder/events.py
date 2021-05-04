@@ -445,7 +445,7 @@ class FindEvents():
         self.mjups = mjups
             
         # find respective einstein radii
-        einstein_radii = [self.einstein_radius(mass) for mass in mjups]
+        self.einstein_radii = [self.einstein_radius(mass) for mass in mjups]
             
         # calculate for all the masses and have their centroid shifts
         # create the dataframe
@@ -461,9 +461,9 @@ class FindEvents():
 
                 #convert from degrees to mas
                 theta *=  3600 * 1000
-                theta_norm = theta / einstein_radii[j]
+                theta_norm = theta / self.einstein_radii[j]
                 
-                shift = ((einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
+                shift = ((self.einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
                 
                 temp_dict['shift_{}'.format(str(mjups[j]))] = shift
