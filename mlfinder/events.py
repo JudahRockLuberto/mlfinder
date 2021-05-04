@@ -552,7 +552,7 @@ class FindEvents():
     #
     # purpose: visually see centroid shift
     #
-    def plot_shift(self, figsize=(10,10)):
+    def plot_mag(self, figsize=(10,10)):
         # plot each mass' centroid shift
 
         # basic setup
