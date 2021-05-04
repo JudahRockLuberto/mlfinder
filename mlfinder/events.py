@@ -450,10 +450,12 @@ class FindEvents():
         # calculate for all the masses and have their centroid shifts
         # create the dataframe
         shift_df = pd.DataFrame(columns=['time'] + ['shift_' + str(mass) for mass in mjups])
+        mag_df = pd.DataFrame(columns=['time'] + ['mag_' + str(mass) for mass in mjups])
         theta_list = list()
         for index, row in self.bd.coord_df.iterrows():
             # create dict of a row for the df
-            temp_dict = {'time' : row.time}
+            temp_dict_shift = {'time' : row.time}
+            temp_dict_mag = {'time' : row.time}
             
             # loop through each mjup and add it to temp_dict for each mass
             for j in range(len(mjups)):
@@ -466,14 +468,17 @@ class FindEvents():
                 shift = ((self.einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
                 
-                temp_dict['shift_{}'.format(str(mjups[j]))] = shift
+                temp_dict_shift['shift_{}'.format(str(mjups[j]))] = shift
+                temp_dict_mag['shift_{}'.format(str(mjups[j]))] = mag
                 theta_list.append(theta)
                 
             # add each row to the df
-            shift_df = shift_df.append(temp_dict, ignore_index=True)    
+            shift_df = shift_df.append(temp_dict_shift, ignore_index=True)
+            mag_df = mag_df.append(temp_dict_mag, ignore_index=True)    
             
         self.theta_list = theta_list
         self.shift_df = shift_df
+        self.mag_df = mag_df
 
         return shift_df
         
@@ -481,7 +486,69 @@ class FindEvents():
     # Name: plot_shift
     #
     # inputs: shifts over time (arbitrary number)
-    # outputs: plot of all the shifts over tiem
+    # outputs: plot of all the shifts over time
+    #
+    # purpose: visually see centroid shift
+    #
+    def plot_shift(self, figsize=(10,10)):
+        # plot each mass' centroid shift
+
+        # basic setup
+        fig = plt.figure(figsize=figsize)
+
+        fig.subplots_adjust(
+            left=0.0, right=1.0, bottom=0.0, top=1.0,
+            wspace=0.00, hspace=0.00)
+
+        ax1 = fig.add_axes([0.09, 0.09, 0.90, 0.90])
+
+        # set titles
+        ax1.set_xlabel(r'Time (yrs)', fontsize=20)
+        ax1.set_ylabel(r'$ \delta_{m}(t)$ (mas) ', fontsize=20)
+
+        ax1.tick_params(axis='both', labelsize=16)
+
+        # add an arbitrary number of shifts after interpolating
+        for i in range(len(self.mag_df.columns) - 1):
+            name = self.mag_df.columns[i + 1]
+            number = name.split('_')[1]
+            
+            # interpolate the shift
+            interp_shift, interp_time = self.interpolate_shift(self.mag_df[name], self.mag_df['time'])
+            
+            shift = ax1.scatter(interp_time, interp_shift, s=2, label = number + r' M$_\mathrm{jup}$')
+            
+        # find where to set xlim based on peak: find point closest to half_max, get its index,
+        # find the difference of max time to this time
+        mag_col = list(self.mag_df[self.mag_df.columns[1]])
+        time_col = list(self.mag_df[self.mag_df.columns[0]])
+        
+        half_max = max(mag_col) / 2
+
+        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
+        closest_index = mag_col.index(closest)
+        
+        max_index = mag_col.index(max(mag_col))
+        
+        time_dif = abs(time_col[max_index] - time_col[closest_index])
+        
+        # make axis to 2 * time difference
+        #ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
+
+        # set tick lables and the like
+        ax1.ticklabel_format(useOffset=False)
+
+        ax1.legend(fontsize=20, markerscale=7)
+
+        self.shift_fig = fig
+
+        return fig
+
+    ##
+    # Name: plot_mag
+    #
+    # inputs: mags over time (arbitrary number)
+    # outputs: plot of all the mags over time
     #
     # purpose: visually see centroid shift
     #
@@ -548,6 +615,7 @@ class FindEvents():
 
         return fig
 
+    
     ##
     # Name: event_mcmc
     #
