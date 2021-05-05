@@ -504,7 +504,7 @@ class FindEvents():
 
         # set titles
         ax1.set_xlabel(r'Time (yrs)', fontsize=20)
-        ax1.set_ylabel(r'$ \delta_{m}(t)$ (mas) ', fontsize=20)
+        ax1.set_ylabel(r'$ \delta_{c}(t)$ (mas) ', fontsize=20)
 
         ax1.tick_params(axis='both', labelsize=16)
 
@@ -566,7 +566,7 @@ class FindEvents():
 
         # set titles
         ax1.set_xlabel(r'Time (yrs)', fontsize=20)
-        ax1.set_ylabel(r'$ \delta_{c}(t)$ (mas) ', fontsize=20)
+        ax1.set_ylabel(r'$ \delta_{m}(t)$ (mas) ', fontsize=20)
 
         ax1.tick_params(axis='both', labelsize=16)
         
