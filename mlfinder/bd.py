@@ -1,5 +1,6 @@
 # basic imports
 import time
+from time import strptime
 
 import numpy as np
 import pandas as pd
