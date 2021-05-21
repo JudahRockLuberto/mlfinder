@@ -34,7 +34,7 @@ def find_info(df, are_uncertainties):
   
 # create brown dwarf class
 class BrownDwarf():
-    def __init__(self, bd, array_col_names=None):
+    def __init__(self, bd, observ_date, array_col_names=None):
         # grab column names before make bd an np.array() (bc takes away column names)
         if isinstance(bd, pd.DataFrame):
             column_names = bd.columns.values
@@ -44,6 +44,8 @@ class BrownDwarf():
             
         if isinstance(bd, np.ndarray):
             column_names = array_col_names
+            
+        self.observ_date = observ_date
             
         # check really quick if uncertainties in column names. If so, see that --all-- the uncertainties are there. else, return with issues
         uncertainties = ['pm_ra', 'pm_dec', 'pm_pi', 'pm_mu_alpha', 'pm_mu_delta']
@@ -100,11 +102,11 @@ class BrownDwarf():
         mu_a = self.mu_a / 1000
         mu_d = self.mu_d / 1000
 
-        t_0 = float(start.split('-')[0]) #when observations happened
-        
+        t_0 = float(self.observ_date.split('-')[0]) #when observations happened
+        print(t_0)
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
-                       epochs={'start':start, 'stop':end,
+                       epochs={'start':self.observ_date, 'stop':end,
                                'step':step})
 
         vectors = obj.vectors()
