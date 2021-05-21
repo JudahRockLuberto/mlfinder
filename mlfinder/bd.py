@@ -101,9 +101,17 @@ class BrownDwarf():
         pi_trig = self.pi / 1000
         mu_a = self.mu_a / 1000
         mu_d = self.mu_d / 1000
-
-        t_0 = float(self.observ_date.split('-')[0]) #when observations happened
-        print(t_0)
+        
+        # make inputted times into jd -- note that t_split is temp, so i reuse for the observed date and the start date
+        
+        # initial time
+        t_split = self.observ_date.split('-')
+        t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+        
+        # start time
+        t_split = start.split('-')
+        t_start = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+        
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
                        epochs={'start':self.observ_date, 'stop':end,
@@ -136,8 +144,9 @@ class BrownDwarf():
             a_t = a_t / 3600
             d_t = d_t / 3600
 
-            #add to the coord dataframe
-            coord_df = coord_df.append({'time': t, 'ra': a_t, 'dec': d_t}, ignore_index=True)
+            #add to the coord dataframe,  but only if during or after when we want the start
+            if t > t_start:
+                coord_df = coord_df.append({'time': t, 'ra': a_t, 'dec': d_t}, ignore_index=True)
 
         # put to BrownDwarf too
         self.coord_df = coord_df
