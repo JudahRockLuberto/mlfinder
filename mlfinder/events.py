@@ -533,7 +533,7 @@ class FindEvents():
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
         # make axis to 2 * time difference
-        print('time_diff', time_diff)
+        print('time_diff', time_dif)
         print('max', time_col[max_index])
         ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
 
