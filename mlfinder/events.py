@@ -533,7 +533,7 @@ class FindEvents():
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
         # make axis to 2 * time difference
-        #ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
+        ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
 
         # set tick lables and the like
         ax1.ticklabel_format(useOffset=False)
