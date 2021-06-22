@@ -534,7 +534,7 @@ class FindEvents():
         
         half_max = max(shift_col) / 2
 
-        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()] + 1
+        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
         closest_index = shift_col.index(closest)
         
         max_index = shift_col.index(max(shift_col))
@@ -597,7 +597,7 @@ class FindEvents():
         
         half_max = max(mag_col_reduced) / 2
     
-        closest = np.array(mag_col_reduced).flat[np.abs(np.array(mag_col_reduced) - half_max).argmin()]
+        closest = np.array(mag_col_reduced).flat[np.abs(np.array(mag_col_reduced) - half_max).argmin()] + 1
         closest_index = mag_col.index(closest)
         
         max_index = mag_col.index(max(mag_col))
