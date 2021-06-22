@@ -534,7 +534,7 @@ class FindEvents():
         
         half_max = max(shift_col) / 2
 
-        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
+        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()] + 1
         closest_index = shift_col.index(closest)
         
         max_index = shift_col.index(max(shift_col))
