@@ -490,71 +490,7 @@ class FindEvents():
     #
     # purpose: visually see centroid shift
     #
-    def plot_shift(self, figsize=(10,10)):
-        # plot each mass' centroid shift
-
-        # basic setup
-        fig = plt.figure(figsize=figsize)
-
-        fig.subplots_adjust(
-            left=0.0, right=1.0, bottom=0.0, top=1.0,
-            wspace=0.00, hspace=0.00)
-
-        ax1 = fig.add_axes([0.09, 0.09, 0.90, 0.90])
-
-        # set titles
-        ax1.set_xlabel(r'Time (yrs)', fontsize=20)
-        ax1.set_ylabel(r'$ \delta_{c}(t)$ (mas) ', fontsize=20)
-
-        ax1.tick_params(axis='both', labelsize=16)
-
-        # add an arbitrary number of shifts after interpolating
-        for i in range(len(self.mag_df.columns) - 1):
-            name = self.mag_df.columns[i + 1]
-            number = name.split('_')[1]
-            
-            # interpolate the shift
-            interp_shift, interp_time = self.interpolate_shift(self.mag_df[name], self.mag_df['time'])
-            
-            shift = ax1.scatter(interp_time, interp_shift, s=2, label = number + r' M$_\mathrm{jup}$')
-            
-        # find where to set xlim based on peak: find point closest to half_max, get its index,
-        # find the difference of max time to this time
-        shift_col = list(self.shift_df[self.shift_df.columns[1]])
-        time_col = list(self.shift_df[self.shift_df.columns[0]])
-        
-        half_max = max(shift_col) / 2
-
-        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
-        closest_index = shift_col.index(closest)
-        
-        max_index = shift_col.index(max(shift_col))
-        
-        time_dif = abs(time_col[max_index] - time_col[closest_index])
-        
-        # make axis to 2 * time difference
-        print('time_diff', time_dif)
-        print('max', time_col[max_index])
-        ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
-
-        # set tick lables and the like
-        ax1.ticklabel_format(useOffset=False)
-
-        ax1.legend(fontsize=20, markerscale=7)
-
-        self.shift_fig = fig
-
-        return fig
-
-    ##
-    # Name: plot_mag
-    #
-    # inputs: mags over time (arbitrary number)
-    # outputs: plot of all the mags over time
-    #
-    # purpose: visually see centroid shift
-    #
-    def plot_mag(self, figsize=(10,10)):
+    def plot_shift(self, figsize=(10,10)):    
         # plot each mass' centroid shift
 
         # basic setup
@@ -593,15 +529,15 @@ class FindEvents():
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
-        mag_col = list(self.mag_df[self.mag_df.columns[1]])
-        time_col = list(self.mag_df[self.mag_df.columns[0]])
+        shift_col = list(self.shift_df[self.shift_df.columns[1]])
+        time_col = list(self.shift_df[self.shift_df.columns[0]])
         
-        half_max = max(mag_col) / 2
+        half_max = max(shift_col) / 2
 
-        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
-        closest_index = mag_col.index(closest)
+        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
+        closest_index = shift_col.index(closest)
         
-        max_index = mag_col.index(max(mag_col))
+        max_index = shift_col.index(max(shift_col))
         
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
@@ -617,7 +553,70 @@ class FindEvents():
 
         return fig
 
-    
+    ##
+    # Name: plot_mag
+    #
+    # inputs: mags over time (arbitrary number)
+    # outputs: plot of all the mags over time
+    #
+    # purpose: visually see centroid shift
+    #
+    def plot_mag(self, figsize=(10,10)):        
+        # plot each mass' centroid shift
+
+        # basic setup
+        fig = plt.figure(figsize=figsize)
+
+        fig.subplots_adjust(
+            left=0.0, right=1.0, bottom=0.0, top=1.0,
+            wspace=0.00, hspace=0.00)
+
+        ax1 = fig.add_axes([0.09, 0.09, 0.90, 0.90])
+
+        # set titles
+        ax1.set_xlabel(r'Time (yrs)', fontsize=20)
+        ax1.set_ylabel(r'$ \delta_{c}(t)$ (mas) ', fontsize=20)
+
+        ax1.tick_params(axis='both', labelsize=16)
+
+        # add an arbitrary number of shifts after interpolating
+        for i in range(len(self.mag_df.columns) - 1):
+            name = self.mag_df.columns[i + 1]
+            number = name.split('_')[1]
+            
+            # interpolate the shift
+            interp_shift, interp_time = self.interpolate_shift(self.mag_df[name], self.mag_df['time'])
+            
+            shift = ax1.scatter(interp_time, interp_shift, s=2, label = number + r' M$_\mathrm{jup}$')
+            
+        # find where to set xlim based on peak: find point closest to half_max, get its index,
+        # find the difference of max time to this time
+        mag_col = list(self.mag_df[self.mag_df.columns[1]])
+        time_col = list(self.mag_df[self.mag_df.columns[0]])
+        
+        half_max = max(mag_col) / 2
+
+        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
+        closest_index = mag_col.index(closest)
+        
+        max_index = mag_col.index(max(mag_col))
+        
+        time_dif = abs(time_col[max_index] - time_col[closest_index])
+        
+        # make axis to 2 * time difference
+        print('time_diff', time_dif)
+        print('max', time_col[max_index])
+        ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
+
+        # set tick lables and the like
+        ax1.ticklabel_format(useOffset=False)
+
+        ax1.legend(fontsize=20, markerscale=7)
+
+        self.shift_fig = fig
+
+        return fig
+
     ##
     # Name: event_mcmc
     #
