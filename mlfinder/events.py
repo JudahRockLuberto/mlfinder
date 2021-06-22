@@ -591,12 +591,13 @@ class FindEvents():
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
-        mag_col = list(self.mag_df[self.mag_df.columns[1]])
+        mag_col = list((self.mag_df[self.mag_df.columns[1]]))
+        mag_col_reduced = list((self.mag_df[self.mag_df.columns[1]]) - 1)
         time_col = list(self.mag_df[self.mag_df.columns[0]])
         
-        half_max = max(mag_col) / 2
-
-        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
+        half_max = max(mag_col_reduced) / 2
+    
+        closest = np.array(mag_col_reduced).flat[np.abs(np.array(mag_col_reduced) - half_max).argmin()]
         closest_index = mag_col.index(closest)
         
         max_index = mag_col.index(max(mag_col))
