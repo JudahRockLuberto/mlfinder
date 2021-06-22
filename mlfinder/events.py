@@ -467,6 +467,8 @@ class FindEvents():
                 
                 shift = ((self.einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
+                print(row)
+                print(j, mag)
                 
                 temp_dict_shift['shift_{}'.format(str(mjups[j]))] = shift
                 temp_dict_mag['mag_{}'.format(str(mjups[j]))] = mag
@@ -605,12 +607,10 @@ class FindEvents():
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
         # make axis to 2 * time difference
-        print('time_diff', time_dif)
-        print('max', time_col[max_index])
         ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
         
         # add a lower y limit (because plot starts at y=1)
-        ax1.set_ylim(bottom=0.99)
+        #ax1.set_ylim(bottom=0.99)
 
         # set tick lables and the like
         ax1.ticklabel_format(useOffset=False)
