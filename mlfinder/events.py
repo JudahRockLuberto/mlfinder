@@ -610,7 +610,7 @@ class FindEvents():
         ax1.set_xlim(time_col[max_index] - (2 * time_dif), time_col[max_index] + (2 * time_dif))
         
         # add a lower y limit (because plot starts at y=1)
-        ax1.gca().set_ylim(bottom=0.99)
+        ax1.set_ylim(bottom=0.99)
 
         # set tick lables and the like
         ax1.ticklabel_format(useOffset=False)
