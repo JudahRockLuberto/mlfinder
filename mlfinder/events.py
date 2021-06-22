@@ -520,15 +520,15 @@ class FindEvents():
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
-        mag_col = list(self.mag_df[self.mag_df.columns[1]])
-        time_col = list(self.mag_df[self.mag_df.columns[0]])
+        shift_col = list(self.shift_df[self.shift_df.columns[1]])
+        time_col = list(self.shift_df[self.shift_df.columns[0]])
         
-        half_max = max(mag_col) / 2
+        half_max = max(shift_col) / 2
 
-        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
-        closest_index = mag_col.index(closest)
+        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
+        closest_index = shift_col.index(closest)
         
-        max_index = mag_col.index(max(mag_col))
+        max_index = shift_col.index(max(shift_col))
         
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
@@ -593,15 +593,15 @@ class FindEvents():
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
-        shift_col = list(self.shift_df[self.shift_df.columns[1]])
-        time_col = list(self.shift_df[self.shift_df.columns[0]])
+        mag_col = list(self.mag_df[self.mag_df.columns[1]])
+        time_col = list(self.mag_df[self.mag_df.columns[0]])
         
-        half_max = max(shift_col) / 2
+        half_max = max(mag_col) / 2
 
-        closest = np.array(shift_col).flat[np.abs(np.array(shift_col) - half_max).argmin()]
-        closest_index = shift_col.index(closest)
+        closest = np.array(mag_col).flat[np.abs(np.array(mag_col) - half_max).argmin()]
+        closest_index = mag_col.index(closest)
         
-        max_index = shift_col.index(max(shift_col))
+        max_index = mag_col.index(max(mag_col))
         
         time_dif = abs(time_col[max_index] - time_col[closest_index])
         
