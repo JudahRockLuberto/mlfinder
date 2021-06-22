@@ -577,7 +577,7 @@ class FindEvents():
 
         # set titles
         ax1.set_xlabel(r'Time (yrs)', fontsize=20)
-        ax1.set_ylabel(r'$ \delta_{c}(t)$ (mas) ', fontsize=20)
+        ax1.set_ylabel(r'$ \delta_{c}(t) - 1$ (mas) ', fontsize=20)
 
         ax1.tick_params(axis='both', labelsize=16)
 
@@ -589,7 +589,10 @@ class FindEvents():
             # interpolate the shift
             interp_shift, interp_time = self.interpolate_shift(self.mag_df[name], self.mag_df['time'])
             
-            shift = ax1.scatter(interp_time, interp_shift, s=2, label = number + r' M$_\mathrm{jup}$')
+            # reduce by 1
+            interp_shift_reduced = np.array(interp_shift) - 1
+            
+            shift = ax1.scatter(interp_time, interp_shift_reduced, s=2, label = number + r' M$_\mathrm{jup}$')
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
