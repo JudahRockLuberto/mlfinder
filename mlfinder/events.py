@@ -456,7 +456,7 @@ class FindEvents():
             # create dict of a row for the df
             temp_dict_shift = {'time' : row.time}
             temp_dict_mag = {'time' : row.time}
-            print(row)
+
             # loop through each mjup and add it to temp_dict for each mass
             for j in range(len(mjups)):
                 theta = pyasl.getAngDist(row.ra, row.dec, list(self.event_table.bs_ra)[which] , list(self.event_table.bs_dec)[which])
@@ -467,8 +467,6 @@ class FindEvents():
                 
                 shift = ((self.einstein_radii[j]) * theta_norm) / ((theta_norm ** 2) + 2)
                 mag = ((theta_norm ** 2) + 2) / (theta_norm * math.sqrt((theta_norm ** 2) + 4))
-                
-                print(j, mag)
                 
                 temp_dict_shift['shift_{}'.format(str(mjups[j]))] = shift
                 temp_dict_mag['mag_{}'.format(str(mjups[j]))] = mag
