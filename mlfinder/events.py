@@ -359,7 +359,12 @@ class FindEvents():
         
         years = range(start_year, end_year+1, years)
         
+        print('start and end', start_year, end_year)
+        print('years', years)
+        print('a_years', a_years)
+        print('d_years', d_years)
         for i, txt in enumerate(years):
+            print(i, txt)
             ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=font_size)
             
         # plot the background stars
