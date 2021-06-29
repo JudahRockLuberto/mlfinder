@@ -359,9 +359,9 @@ class FindEvents():
         
         years = range(start_year, end_year+1, years)
         
-        for i, txt in enumerate(years):
-            if i != len(years):
-                ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=font_size)
+        ax1.annotate(years[0], (a_years[0], d_years[0]), fontsize=font_size)
+        #for i, txt in enumerate(years):
+        #    ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=font_size)
             
         # plot the background stars
         if gaia_check == True:
