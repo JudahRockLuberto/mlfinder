@@ -78,6 +78,8 @@ class MonteCarlo():
         placement = {'bd_ra':0, 'bd_dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
         
         vary_index = placement[self.vary[0]]
+        print('all_data', all_data)
+        print('vary_index', vary_index)
         length = len(all_data[vary_index])
         
         # run through each sample and get the measurement uncertainty
