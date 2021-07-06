@@ -81,7 +81,7 @@ class MonteCarlo():
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
             # create a BrownDwarf instance
-            bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_date=self.bd.observ_data, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
+            bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_date=self.bd.observ_date, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
             bd_path = bd_new.find_path(start=self.bd.start, end=self.bd.end, step=self.bd.step)
             
             # take star info from event table and the brown dwarf path to find a list of distance
