@@ -75,16 +75,16 @@ class MonteCarlo():
         all_data = [np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data]
 
         # find rang to run through
-        placement = {'bd_ra':0, 'bd_dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
+        """placement = {'bd_ra':0, 'bd_dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
         
         vary_index = placement[self.vary[0]]
         print('all_data', all_data)
         print('vary_index', vary_index)
-        length = len(all_data[vary_index])
+        length = len(all_data[vary_index])"""
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
-        for i in range(length):                
+        for i in range(samples):                
             # grab data if needs to be indexed or not
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
