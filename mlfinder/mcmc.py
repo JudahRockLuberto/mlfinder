@@ -65,8 +65,8 @@ class MonteCarlo():
         # get "new" data for brown dwarf
         
         # grab random samples of whichever is in self.vary
-        vary_data = {'ra': [self.bd.ra, self.bd.pm_ra],
-                     'dec': [self.bd.dec, self.bd.pm_dec],
+        vary_data = {'bd_ra': [self.bd.ra, self.bd.pm_ra],
+                     'bd_dec': [self.bd.dec, self.bd.pm_dec],
                      'pi': [self.bd.pi, self.bd.pm_pi],
                      'mu_alpha': [self.bd.mu_a, self.bd.pm_mu_a],
                      'mu_delta': [self.bd.mu_d, self.bd.pm_mu_d]}
