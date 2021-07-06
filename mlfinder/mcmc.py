@@ -73,15 +73,6 @@ class MonteCarlo():
         
         # add data to a list for ease
         all_data = [np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data]
-
-        # find rang to run through
-        """placement = {'bd_ra':0, 'bd_dec':1, 'pi':2, 'mu_alpha':3, 'mu_delta':4}
-        
-        vary_index = placement[self.vary[0]]
-        print('all_data', all_data)
-        print('vary_index', vary_index)
-        length = len(all_data[vary_index])"""
-        print(len(all_data[0]))
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
@@ -90,7 +81,7 @@ class MonteCarlo():
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
             # create a BrownDwarf instance
-            bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_data=self.bd.observ_data, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
+            bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_date=self.bd.observ_data, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
             bd_path = bd_new.find_path(start=self.bd.start, end=self.bd.end, step=self.bd.step)
             
             # take star info from event table and the brown dwarf path to find a list of distance
