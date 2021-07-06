@@ -81,7 +81,7 @@ class MonteCarlo():
         print('all_data', all_data)
         print('vary_index', vary_index)
         length = len(all_data[vary_index])"""
-        print(len(all_data['ra']))
+        print(len(all_data[0]))
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
