@@ -81,10 +81,11 @@ class MonteCarlo():
         print('all_data', all_data)
         print('vary_index', vary_index)
         length = len(all_data[vary_index])"""
+        print(len(vary_data['ra']))
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
-        for i in range(samples):                
+        for i in range(self.samples):                
             # grab data if needs to be indexed or not
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
