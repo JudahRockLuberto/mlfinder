@@ -79,17 +79,16 @@ class MonteCarlo():
         for i in range(self.samples):
             # grab data if needs to be indexed or not
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
-            print('instance_data', instance_data)
+            
             # create a BrownDwarf instance
             bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_date=self.bd.observ_date, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
             bd_path = bd_new.find_path(start=self.bd.start, end=self.bd.end, step=self.bd.step)
             
             # take star info from event table and the brown dwarf path to find a list of distance
             separations = [pyasl.getAngDist(row.ra, row.dec, self.event.bs_ra, self.event.bs_dec) * 3600 for index, row in bd_path.iterrows()]
-            print('sep', separations)
+            
             # get minimum distance and calculate the mass uncertainty
             min_separation = min(separations)
-            print('min_sep', min_separation)
             delta_ml = self.delta_ml_calc(min_separation)
             mass_unc_list.append(delta_ml)
             
