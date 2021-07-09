@@ -76,7 +76,7 @@ class MonteCarlo():
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list = list()
-        for i in range(self.samples):                
+        for i in range(self.samples):
             # grab data if needs to be indexed or not
             instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
             
@@ -91,6 +91,9 @@ class MonteCarlo():
             min_separation = min(separations)
             delta_ml = self.delta_ml_calc(min_separation)
             mass_unc_list.append(delta_ml)
+            
+            if i % 10 == 0:
+                print(i)
         
         self.mass_unc_list = mass_unc_list
         return mass_unc_list
