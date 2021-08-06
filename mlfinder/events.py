@@ -340,7 +340,7 @@ class FindEvents():
         
         #make list of alpha and dec every 10 years and plot them with text as visual markers. easy to see in plot and see
         #direction the dwarf goes.   
-        measure_dict = {'1day': 365,
+        """measure_dict = {'1day': 365,
                         '7days': 52,
                         '1month': 12,
                         '3months': 4,
@@ -353,7 +353,7 @@ class FindEvents():
         d_years = [i for i in self.bd.coord_df.dec if list(self.bd.coord_df.dec).index(i) % (years * measure_in_year) == 0]
         
         # plot year labels
-        ax1.scatter(a_years, d_years, s=point_size+1, c='blue', marker="D")
+        ax1.scatter(a_years, d_years, s=point_size+1, c='blue', marker="D")"""
 
         # adding text to 10 yr plot
         # finding placement to put plots based on change of ra/dec (10x more off with dec than ra bc of length of time)
