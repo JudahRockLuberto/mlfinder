@@ -335,8 +335,8 @@ class FindEvents():
         # add lims themselves
         ax1.axis('equal')
         
-        ax1.set_xlim(self.a_ends[0] + (-1 * a_dir * zoom * path_length), self.a_ends[1] + (a_dir * zoom * path_length))
-        ax1.set_ylim(self.d_ends[0] + (-1 * d_dir * zoom * path_length), self.d_ends[1] + (d_dir * zoom * path_length))
+        ax1.set_xlim(self.event_table.bd_ra + (-1 * a_dir * zoom * path_length), self.event_table.bd_ra + (a_dir * zoom * path_length))
+        ax1.set_ylim(self.event_table.bd_dec + (-1 * d_dir * zoom * path_length), self.event_table.bd_dec + (d_dir * zoom * path_length))
         
         #make list of alpha and dec every 10 years and plot them with text as visual markers. easy to see in plot and see
         #direction the dwarf goes.   
@@ -386,8 +386,8 @@ class FindEvents():
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
         
         # add zoomed axis
-        axins = zoomed_inset_axes(ax, 6, loc=1) # zoom = 6
-        axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
+        #axins = zoomed_inset_axes(ax, 6, loc=1) # zoom = 6
+        #axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
 
         
         self.event_plot = fig
