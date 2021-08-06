@@ -519,6 +519,8 @@ class FindEvents():
         """
 
         # add an arbitrary number of shifts after interpolating
+        colors = ['#2ab0ff', '#259EE5', '#218CCC', '#1D7BB2', '#196999', '#14587F', '#104666', '#0C344C', '#082333', '#041119', '#000000'][::-1]
+
         for i in range(len(self.shift_df.columns) - 1):
             name = self.shift_df.columns[i + 1]
             number = name.split('_')[1]
@@ -526,7 +528,7 @@ class FindEvents():
             # interpolate the shift
             interp_shift, interp_time = self.interpolate_shift(self.shift_df[name], self.shift_df['time'])
             
-            shift = ax1.scatter(interp_time, interp_shift, s=2, label = number + r' M$_\mathrm{jup}$')
+            shift = ax1.scatter(interp_time, interp_shift, c=colors[i], s=2, label = number + r' M$_\mathrm{jup}$')
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
