@@ -392,6 +392,8 @@ class FindEvents():
         axins.set_xlim(342.29270, 342.29275)
         axins.set_ylim(32.09605, 32.09600)
         
+        mark_inset(ax1, axins, loc1=2, loc2=4, fc="none", ec="0.5")
+        
         self.event_plot = fig
         
         return fig
