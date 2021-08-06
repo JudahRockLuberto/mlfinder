@@ -519,7 +519,7 @@ class FindEvents():
         """
 
         # add an arbitrary number of shifts after interpolating
-        colors = ['#2ab0ff', '#ff752a', '#ffdf2a', '#bc2aff']
+        colors = ['#003f5c', '#7a5195', '#ef5675', '#ffa600']
 
         for i in range(len(self.shift_df.columns) - 1):
             name = self.shift_df.columns[i + 1]
