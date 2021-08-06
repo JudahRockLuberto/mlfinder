@@ -4,6 +4,9 @@ import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+
 import numpy as np
 import pandas as pd
 
@@ -359,7 +362,7 @@ class FindEvents():
         
         years = range(start_year, end_year+1, years)
         
-        ax1.annotate(years[0], (a_years[0], d_years[0]), fontsize=font_size)
+        #ax1.annotate(years[0], (a_years[0], d_years[0]), fontsize=font_size)
         #for i, txt in enumerate(years):
         #    ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=font_size)
             
@@ -381,7 +384,12 @@ class FindEvents():
         
         # plot the brown dwarf path 
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
+        
+        # add zoomed axis
+        axins = zoomed_inset_axes(ax, 6, loc=1) # zoom = 6
+        axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
 
+        
         self.event_plot = fig
         
         return fig
@@ -493,7 +501,7 @@ class FindEvents():
     #
     def plot_shift(self, figsize=(10,10)):    
         # plot each mass' centroid shift
-
+        
         # basic setup
         fig = plt.figure(figsize=figsize)
 
