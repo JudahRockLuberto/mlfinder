@@ -386,8 +386,8 @@ class FindEvents():
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
         
         # add zoomed axis
-        axins = zoomed_inset_axes(ax1, 6, loc=1) # zoom = 6
-        axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
+        #axins = zoomed_inset_axes(ax1, 6, loc=1) # zoom = 6
+        #axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
         
         #axins.set_xlim()
         #axins.set_ylim()
