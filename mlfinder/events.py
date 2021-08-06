@@ -528,7 +528,7 @@ class FindEvents():
             # interpolate the shift
             interp_shift, interp_time = self.interpolate_shift(self.shift_df[name], self.shift_df['time'])
             
-            shift = ax1.scatter(interp_time, interp_shift, c=colors[i], s=2, label = number + r' M$_\mathrm{jup}$')
+            shift = ax1.scatter(interp_time, interp_shift, c=colors[i], s=4, label = number + r' M$_\mathrm{jup}$')
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
@@ -593,7 +593,7 @@ class FindEvents():
             # reduce by 1
             interp_shift_reduced = np.array(interp_shift) - 1
             
-            shift = ax1.scatter(interp_time, interp_shift_reduced, s=4, label = number + r' M$_\mathrm{jup}$')
+            shift = ax1.scatter(interp_time, interp_shift_reduced, s=2, label = number + r' M$_\mathrm{jup}$')
             
         # find where to set xlim based on peak: find point closest to half_max, get its index,
         # find the difference of max time to this time
