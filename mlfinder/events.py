@@ -309,7 +309,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
+    def plot_event_path(self, zoom=0.2, zoom_zoom = 6, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
@@ -386,7 +386,7 @@ class FindEvents():
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
         
         # add zoomed axis
-        axins = zoomed_inset_axes(ax1, 6, loc=1) # zoom = 6
+        axins = zoomed_inset_axes(ax1, zoom_zoom, loc=1) # zoom = 6
         axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
         
         axins.set_xlim(342.29270, 342.29275)
