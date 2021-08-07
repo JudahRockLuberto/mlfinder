@@ -389,8 +389,8 @@ class FindEvents():
         axins = zoomed_inset_axes(ax1, zoom_zoom, loc=1) # zoom = 6
         axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
         
-        axins.set_xlim(342.29250, 342.2930)
-        axins.set_ylim(32.09620, 32.09600)
+        axins.set_xlim(self.event_table.bd_ra[0] - 0.0001, self.event_table.bd_ra[0] + 0.0001)
+        axins.set_ylim(self.event_table.bd_dec[0] + 0.0001, self.event_table.bd_dec[0] - 0.0001)
         
         axins.yaxis.get_major_locator().set_params(nbins=7)
         axins.xaxis.get_major_locator().set_params(nbins=7)
