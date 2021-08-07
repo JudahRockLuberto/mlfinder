@@ -309,7 +309,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, zoom_zoom = 6, zoom_axens = 3, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
+    def plot_event_path(self, zoom=0.2, zoom_zoom = 6, zoom_axins = 3, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
@@ -389,8 +389,8 @@ class FindEvents():
         axins = zoomed_inset_axes(ax1, zoom_zoom, loc=1) # zoom = 6
         axins.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
         
-        axens.set_xlim(self.event_table.bs_ra[0] + (-1 * a_dir * zoom_axens * path_length), self.event_table.bs_ra[0] + (a_dir * zoom_axens * path_length))
-        axens.set_ylim(self.event_table.bs_dec[0] + (-1 * d_dir * zoom_axens * path_length), self.event_table.bs_dec[0] + (d_dir * zoom_axens * path_length))
+        axins.set_xlim(self.event_table.bs_ra[0] + (-1 * a_dir * zoom_axins * path_length), self.event_table.bs_ra[0] + (a_dir * zoom_axins * path_length))
+        axins.set_ylim(self.event_table.bs_dec[0] + (-1 * d_dir * zoom_axins * path_length), self.event_table.bs_dec[0] + (d_dir * zoom_axins * path_length))
         
         axins.yaxis.get_major_locator().set_params(nbins=7)
         axins.xaxis.get_major_locator().set_params(nbins=7)
