@@ -395,6 +395,10 @@ class FindEvents():
         axins.yaxis.get_major_locator().set_params(nbins=7)
         axins.xaxis.get_major_locator().set_params(nbins=7)
         
+        plt.setp(axins.get_xticklabels(), visible=False)
+        plt.setp(axins.get_yticklabels(), visible=False)
+        axins.tick_params(axis='both', which='both', length=0)
+        
         mark_inset(ax1, axins, loc1=2, loc2=4, fc="none", ec="0.5")
         
         self.event_plot = fig
