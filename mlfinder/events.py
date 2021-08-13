@@ -379,11 +379,12 @@ class FindEvents():
         
         else:
             gaia_c = 'grey'
-
-        ax1.scatter(self.stars.ra, self.stars.dec, s = point_size, c = gaia_c)
+            
+        colors = ['#003f5c', '#7a5195', '#ef5675', '#ffa600']
+        ax1.scatter(self.stars.ra, self.stars.dec, s = point_size, c = colors[3])
         
         # plot the brown dwarf path 
-        ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c='orange')
+        ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c=colors[0])
         
         self.event_plot = fig
         
