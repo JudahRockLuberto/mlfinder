@@ -106,8 +106,8 @@ class BrownDwarf():
         # make inputted times into jd -- note that t_split is temp, so i reuse for the observed date and the start date
         
         # initial time
-        if type(self.observe_date) == float:
-            t_0 = self.observe_date
+        if type(self.observ_date) == float:
+            t_0 = self.observ_date
         else:
             t_split = self.observ_date.split('-')
             t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
