@@ -106,13 +106,19 @@ class BrownDwarf():
         # make inputted times into jd -- note that t_split is temp, so i reuse for the observed date and the start date
         
         # initial time
-        t_split = self.observ_date.split('-')
-        t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
-        
+        if type(self.observe_date) == float:
+            t_0 = self.observe_date
+        else:
+            t_split = self.observ_date.split('-')
+            t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+
         # start time
-        t_split = start.split('-')
-        t_start = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
-        
+        if type(start) == float:
+            t_start = start
+        else:
+            t_split = start.split('-')
+            t_start = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
                        epochs={'start':self.observ_date, 'stop':end,
