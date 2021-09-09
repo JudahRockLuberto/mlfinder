@@ -41,7 +41,7 @@ class Fields():
         # now to grab the star info
         if file == None:
             q = """SELECT
-                        ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, gaia_pointsource, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
+                        ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
                     FROM
                         ls_dr9.tractor
                     WHERE
