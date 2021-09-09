@@ -278,7 +278,9 @@ class FindEvents():
                                                  
         # find delta_ml for the smallest thetas and add to dictionary.
         # but only do it if goes within the checks (sometimes doesn't)
-        if theta_min != np.inf:                         
+        print(theta_min)
+        if theta_min != np.inf:
+            print('here!!')
             delta_ml = self.delta_ml_calc(theta_min)
 
             close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, gaia_pointsource, time_of_min)
