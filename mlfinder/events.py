@@ -250,7 +250,9 @@ class FindEvents():
                         time_of_min = row['time']
                         
                         ls_id = list(self.stars.ls_id)[i]
-                        mag = list(self.stars.dered_mag_r)[i]
+                        mag = list(self.stars.dered_mag_g
+                                  
+                                  )[i]
                         
                         bd_ra, bd_dec = a_1, d_1
                         bs_ra, bs_dec = a_2, d_2
@@ -262,7 +264,7 @@ class FindEvents():
                         time_of_temp_min = row['time']
                         
                         temp_ls_id = list(self.stars.ls_id)[i]
-                        temp_mag = list(self.stars.dered_mag_r)[i]
+                        temp_mag = list(self.stars.dered_mag_g)[i]
                         
                         temp_bd_ra, temp_bd_dec = a_1, d_1
                         temp_bs_ra, temp_bs_dec = a_2, d_2
