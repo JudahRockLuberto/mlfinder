@@ -95,6 +95,6 @@ class Fields():
         df['dered_mag_g'] = pd.to_numeric(df['dered_mag_g'])
 
         df = df[df.dered_mag_g >= 0]
-        df= df[df.dered_mag_g <= 23.54]
+        df= df[df.dered_mag_g <= 23.95]
 
         return df
