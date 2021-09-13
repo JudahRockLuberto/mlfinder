@@ -90,11 +90,11 @@ class Fields():
         df = pd.DataFrame(stars)
 
         df = df.replace('Infinity', np.nan) #replace infinities with nan
-        df = df.dropna(subset=['dered_mag_r']) #drop nan
+        df = df.dropna(subset=['dered_mag_g']) #drop nan
 
-        df['dered_mag_r'] = pd.to_numeric(df['dered_mag_r'])
+        df['dered_mag_g'] = pd.to_numeric(df['dered_mag_g'])
 
-        df = df[df.dered_mag_r >= 0]
-        df= df[df.dered_mag_r <= 23.54]
+        df = df[df.dered_mag_g >= 0]
+        df= df[df.dered_mag_g <= 23.54]
 
         return df
