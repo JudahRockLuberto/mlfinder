@@ -14,7 +14,9 @@ from mlfinder.bd import BrownDwarf
 
 # class for the fields (potentially either many or one)
 class Fields():
-    def __init__(self, file=None, ra = None, dec = None, bd = None):
+    def __init__(self, file=None, ra = None, dec = None, bd = None, n_arcmin=5):
+        self.n_arcmin = n_arcmin
+        
         # brown dwarf can be ra/dec or data or class
         if ra is not None and dec is not None:
             self.ra = ra
@@ -45,7 +47,7 @@ class Fields():
                     FROM
                         ls_dr8.tractor
                     WHERE
-                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  (5.0/60)) """.format(float(self.ra), float(self.dec))
+                        't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  ({}/60)) """.format(float(self.ra), float(self.dec), float(self.n_arcmin))
             res = qc.query(sql=q)
             self.stars = convert(res,'pandas')
         
