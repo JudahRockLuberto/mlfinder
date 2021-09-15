@@ -366,7 +366,7 @@ class FindEvents():
         #    ax1.annotate(txt, (a_years[i], d_years[i]), fontsize=font_size)
             
         # plot the background stars
-        gaia = self.stars.gaia_pointsource
+        """gaia = self.stars.gaia_pointsource
         
         if gaia_check == True:
             gaia_c = ['red' if x==1 else 'grey' for x in gaia]
@@ -378,10 +378,10 @@ class FindEvents():
                 ax1.legend(handles=[gaia_handle, not_gaia_handle])
         
         else:
-            gaia_c = 'grey'
+            gaia_c = 'grey'"""
             
         colors = ['#003f5c', '#7a5195', '#ef5675', '#ffa600']
-        ax1.scatter(self.stars.ra, self.stars.dec, s = point_size + 8, c = gaia_c)
+        ax1.scatter(self.stars.ra, self.stars.dec, s = point_size + 8, colors[1])
         
         # plot the brown dwarf path 
         ax1.scatter(self.coord_df.ra, self.coord_df.dec, s=point_size, c=colors[3])
