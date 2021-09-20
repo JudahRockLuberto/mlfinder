@@ -1,8 +1,10 @@
 # basic imports
 import math
 
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from matplotlib.ticker import MaxNLocator
 
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset
@@ -495,7 +497,7 @@ class FindEvents():
     #
     # purpose: visually see centroid shift
     #
-    def plot_shift(self, figsize=(10,10)):    
+    def plot_shift(self, figsize=(10,10), ntick_x=None, ntick_y=None):    
         # plot each mass' centroid shift
         
         # basic setup
@@ -513,7 +515,12 @@ class FindEvents():
 
         ax1.tick_params(axis='both', labelsize=16)
         
-        ax1.xaxis.set_major_locator(MaxNLocator(5))
+        # number of ticks
+        if ntick_x is not None:
+            ax1.xaxis.set_major_locator(MaxNLocator(ntick_x))
+            
+        if ntick_y is not None:
+            ax1.xaxis.set_major_locator(MaxNLocator(ntick_x))
         
         # lines for centroid shift plot
         """
