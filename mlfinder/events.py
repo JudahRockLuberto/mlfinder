@@ -513,6 +513,8 @@ class FindEvents():
 
         ax1.tick_params(axis='both', labelsize=16)
         
+        ax1.xaxis.set_major_locator(MaxNLocator(5))
+        
         # lines for centroid shift plot
         """
         ax1.axvline(2021.7479)
