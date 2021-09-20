@@ -310,7 +310,7 @@ class FindEvents():
     # purpose: to create a plot of the path of the brown dwarf overlayed with background stars for sanity checks
     #
     #
-    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20):
+    def plot_event_path(self, zoom=0.2, years=1, figsize=(10,10), gaia_check=False, legend=True, point_size=10, font_size=10, label_size=20, ntick_x=None, ntick_y=None):
          # basic setup
         fig = plt.figure(figsize=figsize)
 
@@ -321,8 +321,8 @@ class FindEvents():
         ax1 = fig.add_axes([0.09, 0.09, 0.90, 0.90])
 
         # set titles
-        plt.xlabel(r'$ \Delta \alpha_{J2000, deg} $', fontsize=label_size)
-        plt.ylabel(r'$ \Delta \delta_{J2000, deg}$', fontsize=label_size)
+        ax1.set_xlabel(r'$ \Delta \alpha_{J2000, deg} $', fontsize=label_size)
+        ax1.set_ylabel(r'$ \Delta \delta_{J2000, deg}$', fontsize=label_size)
         #plt.title(str(self.bd.bd.object_name), fontsize=label_size)
 
         # set limits +-zoom length. I had initially done based on change of ra and dec, but that scaled the plot weird
@@ -338,6 +338,13 @@ class FindEvents():
         
         ax1.set_xlim(self.a_ends[0] + (-1 * a_dir * zoom * path_length), self.a_ends[1] + (a_dir * zoom * path_length))
         ax1.set_ylim(self.d_ends[0] + (-1 * d_dir * zoom * path_length), self.d_ends[1] + (d_dir * zoom * path_length))
+        
+        # ticks
+        if ntick_x is not None:
+            ax1.xaxis.set_major_locator(MaxNLocator(ntick_x))
+            
+        if ntick_y is not None:
+            ax1.yaxis.set_major_locator(MaxNLocator(ntick_y))
         
         #make list of alpha and dec every 10 years and plot them with text as visual markers. easy to see in plot and see
         #direction the dwarf goes.   
