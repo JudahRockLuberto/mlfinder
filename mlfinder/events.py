@@ -194,7 +194,7 @@ class FindEvents():
             radius += 0.1
             close_df = self.close_star_find(a_ends = a_ends, d_ends = d_ends, radius = radius)
             
-            if radius >= 10: #semi-random stopping point
+            if radius >= 100: #semi-random stopping point
                 break
         
         return close_df
