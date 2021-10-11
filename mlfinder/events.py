@@ -194,7 +194,7 @@ class FindEvents():
             radius += 0.1
             close_df = self.close_star_find(a_ends = a_ends, d_ends = d_ends, radius = radius)
             
-            if radius >= 10: #semi-random stopping point
+            if radius >= 5: #semi-random stopping point
                 break
         
         return close_df
@@ -223,7 +223,6 @@ class FindEvents():
         # make initial close_df
         close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'time_of_min'])
         
-        #The process for this function was to find the theta_min for any background star within the RA and Dec range found
         #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
 
         # run through each background star
