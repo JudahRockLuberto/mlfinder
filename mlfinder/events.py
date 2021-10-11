@@ -194,7 +194,7 @@ class FindEvents():
             radius += 0.1
             close_df = self.close_star_find(a_ends = a_ends, d_ends = d_ends, radius = radius)
             
-            if radius >= 100: #semi-random stopping point
+            if radius >= 10: #semi-random stopping point
                 break
         
         return close_df
@@ -213,10 +213,12 @@ class FindEvents():
     #          a star
     def close_star_find(self, a_ends, d_ends, radius):
         #make ra and dec bounds to look at a star
-        a_low = a_ends[0] - (radius * (a_ends[1] - a_ends[0]))
-        a_high = a_ends[1] + (radius * (a_ends[1] - a_ends[0]))
-        d_low = d_ends[0] - (radius * (d_ends[1] - d_ends[0]))
-        d_high = d_ends[1] + (radius * (d_ends[1] - d_ends[0]))
+        distance = pyasl.getAngDist(a_ends[0], d_ends[0], a_ends[1], d_ends[1])
+        
+        a_low = a_ends[0] - (radius * distance)
+        a_high = a_ends[1] + (radius * distance)
+        d_low = d_ends[0] - (radius * distance)
+        d_high = d_ends[1] + (radius * distance)
         
         # make initial close_df
         close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'time_of_min'])
