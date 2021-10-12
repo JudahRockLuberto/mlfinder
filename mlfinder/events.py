@@ -144,7 +144,7 @@ class FindEvents():
 
         #formula from Cushing et al. I have delta_ml and delta_ml2 for two different Ml's (cushing and ours). Subsequently,
         #I also have two events per year. I last used our delta_ml, so I return our number
-        sigma = len(self.stars) / (np.pi * ((self.bd.n_arcmin * 60) ** 2)) #the surface density of stars per arcsecond^2 (#stars / area of view with radius 5 degrees)
+        sigma = len(self.stars) / (np.pi * ((self.stars.n_arcmin * 60) ** 2)) #the surface density of stars per arcsecond^2 (#stars / area of view with radius 5 degrees)
 
         delta_ml = self.m_jup_prec * 9.548 * math.pow(10, -4) #solar mass of jupiter
 
