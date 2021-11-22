@@ -47,8 +47,8 @@ class FindEvents():
         self.theta_max = self.theta_max_calc()
         self.events_per_year = self.events_per_year_calc()
         
-        self.a_ends = [self.coord_df.ra[0], self.coord_df.ra[len(coord_df.ra) - 1]]
-        self.d_ends = [self.coord_df.dec[0], self.coord_df.dec[len(coord_df.dec) - 1]]
+        self.a_ends = [self.coord_df.ra[0], self.coord_df.ra[len(self.coord_df.ra) - 1]]
+        self.d_ends = [self.coord_df.dec[0], self.coord_df.dec[len(self.coord_df.dec) - 1]]
         
         # finding events
         self.event_table = self.find_events()
