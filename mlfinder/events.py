@@ -47,6 +47,9 @@ class FindEvents():
         self.theta_max = self.theta_max_calc()
         self.events_per_year = self.events_per_year_calc()
         
+        self.a_ends = [self.coord_df.ra[0], self.coord_df.ra[len(coord_df.ra) - 1]]
+        self.d_ends = [self.coord_df.dec[0], self.coord_df.dec[len(coord_df.dec) - 1]]
+        
         # finding events
         self.event_table = self.find_events()
     
@@ -167,21 +170,14 @@ class FindEvents():
     # purpose: to take the pre-calculated path of the brown dwarf and background stars and see if there are any possible events
     #
     def find_events(self):
-        # path
-        coord_df = self.bd.coord_df
-        
         # df can append events to
         close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'time_of_min'])
         
-        # ends of path
-        self.a_ends = [coord_df.ra[0], coord_df.ra[len(coord_df.ra) - 1]]
-        self.d_ends = [coord_df.dec[0], coord_df.dec[len(coord_df.dec) - 1]]
-        
         # find "box" where events may possibly occur. this is the maximum distance for an event added on to each end
-        a_low = a_ends[0] - (self.theta_max / (3600 * 1000))
-        a_high = a_ends[1] + (self.theta_max / (3600 * 1000))
-        d_low = d_ends[0] - (self.theta_max / (3600 * 1000))
-        d_high = d_ends[1] + (self.theta_max / (3600 * 1000))
+        a_low = self.a_ends[0] - (self.theta_max / (3600 * 1000))
+        a_high = self.a_ends[1] + (self.theta_max / (3600 * 1000))
+        d_low = self.d_ends[0] - (self.theta_max / (3600 * 1000))
+        d_high = self.d_ends[1] + (self.theta_max / (3600 * 1000))
 
         print(self.theta_max)
         print(a_low, a_ends[0])
