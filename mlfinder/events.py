@@ -59,9 +59,6 @@ class FindEvents():
     # inputs: data from the stars
     # outputs: theta_max for that individual star
     #
-    # purpose: calculate theta max for a given parallax for each brown dwarf. So I can use to include any dwarf-background star
-    #          pairs that are under the theta max for astrometric microlensing. I didn't want to miss any.
-    #
     def theta_max_calc(self):
         # get parallax and astrometric precision.
         parallax = float(self.bd.bd_cut['pi']) / 1000 # arcseconds
