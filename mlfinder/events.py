@@ -49,25 +49,6 @@ class FindEvents():
         
         # finding events
         self.event_table = self.find_events()
-        
-    ##
-    # name: find_events
-    #
-    # inputs: bd and fields
-    # outputs: table of closest approaches
-    #And now for the event juicier stuff and the thing that calls upon the functions above.
-    def find_events(self):
-        # path
-        coord_df = self.bd.coord_df
-        
-        # ends of path
-        self.a_ends = [coord_df.ra[0], coord_df.ra[len(coord_df.ra) - 1]]
-        self.d_ends = [coord_df.dec[0], coord_df.dec[len(coord_df.dec) - 1]]
-        
-        # add to df holding all closest dwarf and background star pairs to call on later.
-        close_df = self.close_stars(a_ends = self.a_ends, d_ends = self.d_ends)
-
-        return close_df
     
     ##
     # Name: theta_max_calc
@@ -88,7 +69,7 @@ class FindEvents():
         big_g = 4.3 * math.pow(10, -3) #pc * solar_mass^-1 * (km/s)^2
         c_squared = 9 * math.pow(10, 10) #(km/s)^2
         d_l = 1 / parallax #in parsecs
-        delta_ml = self.m_jup_prec * 9.548 * math.pow(10, -4) # masses of jupiter 
+        delta_ml = self.m_jup_prec * 9.548 * math.pow(10, -4) # solar masses
         
         k = 8.144 # mas/solar masses
 
@@ -147,7 +128,7 @@ class FindEvents():
         #I also have two events per year. I last used our delta_ml, so I return our number
         sigma = len(self.stars) / (np.pi * ((self.fields.n_arcmin * 60) ** 2)) #the surface density of stars per arcsecond^2 (#stars / area of view with radius 5 degrees)
 
-        delta_ml = self.m_jup_prec * 9.548 * math.pow(10, -4) #solar mass of jupiter
+        delta_ml = self.m_jup_prec * 9.548 * math.pow(10, -4) #solar massses
 
         number = 2 * k * parallax * sigma * (delta_ml / astro_precision)
 
@@ -176,133 +157,72 @@ class FindEvents():
                      }
 
         return close_df.append(value_dict, ignore_index=True)
-       
+        
     ##
-    # Name: close_stars
+    # name: find_events
     #
-    # inputs: ends of brown dwarf (to cut the stars looked at for nearness to save time),
-    # outputs: dictionary of dwarf and background star pairs that make the cut of closest and/or under theta_max
+    # inputs: bd and fields
+    # outputs: table of closest approaches
     #
-    # purpose: to run close_star_find function and keep on adding to the radius until close_star_find can find a star with the 
-    #          given radius. Basically just increase the radius unl not given back None.
+    # purpose: to take the pre-calculated path of the brown dwarf and background stars and see if there are any possible events
     #
-    def close_stars(self, a_ends, d_ends):
-        #continually increase the radius until hit more stars. makes sure get closest star in each while still keeping processing low
-        close_df = pd.DataFrame()
+    def find_events(self):
+        # path
+        coord_df = self.bd.coord_df
         
-        radius = 0
-        while len(close_df) == 0:
-            radius += 0.1
-            close_df = self.close_star_find(a_ends = a_ends, d_ends = d_ends, radius = radius)
-            
-            if radius >= 5: #semi-random stopping point
-                break
-        
-        return close_df
-
-    ##
-    # Name: close_star_find
-    #
-    # inputs: background stars, path of brown dwarf, ends of brown dwarf (to cut the stars looked at for nearness to save time),
-    #         data from brown dwarf for a delta_ml calc, a theta_max for that specific brown dwarf if delta_ml is 4, radius that
-    #         I'll explain in the purpose.
-    # outputs: dictionary of dwarf and background star pairs that make the cut of closest and/or under theta_max
-    #
-    # purpose: to find the closest stars in a certain radius. In the function close_star, I increase the radius to save time in 
-    #          calculation. I want to get the closest star but also not take lots of calc time for it. I also want to catch fast
-    #          moving stars' events. All have a different radius, so to objectify it, I have an increasing radius until I hit
-    #          a star
-    def close_star_find(self, a_ends, d_ends, radius):
-        #make ra and dec bounds to look at a star
-        distance = pyasl.getAngDist(a_ends[0], d_ends[0], a_ends[1], d_ends[1])
-        
-        a_low = a_ends[0] - (radius * distance)
-        a_high = a_ends[1] + (radius * distance)
-        d_low = d_ends[0] - (radius * distance)
-        d_high = d_ends[1] + (radius * distance)
-        
-        # make initial close_df
+        # df can append events to
         close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'time_of_min'])
         
-        #through the radius. And then I process by taking the smallest delta_ml and any delta_mls lower than 4.
+        # ends of path
+        self.a_ends = [coord_df.ra[0], coord_df.ra[len(coord_df.ra) - 1]]
+        self.d_ends = [coord_df.dec[0], coord_df.dec[len(coord_df.dec) - 1]]
+        
+        # find "box" where events may possibly occur. this is the maximum distance for an event added on to each end
+        a_low = a_ends[0] - (self.theta_max / (3600 * 1000))
+        a_high = a_ends[1] + (self.theta_max / (3600 * 1000))
+        d_low = d_ends[0] - (self.theta_max / (3600 * 1000))
+        d_high = d_ends[1] + (self.theta_max / (3600 * 1000))
+
+        print(self.theta_max)
+        print(a_low, a_ends[0])
+        print(a_high, a_ends[1])
+        print(d_low, d_ends[0])
+        print(d_high, d_ends[1])
 
         # run through each background star
-        theta_min = np.inf
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
             # do checks   
             a_check = (abs(a_high - list(self.stars.ra)[i]) + abs(list(self.stars.ra)[i] - a_low)) == abs(a_high - a_low)
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
-            
+
             if a_check and d_check:
-                theta_temp_min = np.inf
-                
-                #run through each brown dwarf data point in path
-                for index, row in self.coord_df.iterrows(): 
-                    a_1 = row['ra'] # deg
-                    d_1 = row['dec'] # deg
-                    a_2 = list(self.stars.ra)[i] # deg
-                    d_2 = list(self.stars.dec)[i] # deg
-                    
-                    theta = pyasl.getAngDist(a_1, d_1, a_2, d_2) #angular difference in degrees
-                    theta *= 3600 #convert from degrees to arcseconds
+                thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], list(self.stars.ra)[i], list(self.stars.dec)[i]) for index, row in self.coord_df.iterrows()])
+                thetas *= 3600 # deg to arcseconds
 
-                    # if point is closer to background star than any point I have seen so far, make theta_min and record
-                    # which background star it is.
-                    if theta < theta_min:
-                        theta_min = theta
-                        time_of_min = row['time']
-                        
-                        ls_id = list(self.stars.ls_id)[i]
-                        mag = list(self.stars.dered_mag_g
-                                  
-                                  )[i]
-                        
-                        bd_ra, bd_dec = a_1, d_1
-                        bs_ra, bs_dec = a_2, d_2
-                        
-                    # do the same thing as above, but for each brown dwarf that passes the checks. afterwards, check individual
-                    # theta_temp_min and see if below self.theta_max
-                    if theta < theta_temp_min:
-                        temp_theta_min = theta
-                        time_of_temp_min = row['time']
-                        
-                        temp_ls_id = list(self.stars.ls_id)[i]
-                        temp_mag = list(self.stars.dered_mag_g)[i]
-                        
-                        temp_bd_ra, temp_bd_dec = a_1, d_1
-                        temp_bs_ra, temp_bs_dec = a_2, d_2
-                        
-                # to make sure I catch possible events smaller than theta_max
-                if temp_theta_min < self.theta_max:
-                    temp_delta_ml = self.delta_ml_calc(temp_theta_min)
-                    
-                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, temp_theta_min, temp_delta_ml, temp_bd_ra, temp_bd_dec, temp_ls_id, temp_bs_ra, temp_bs_dec, temp_mag, time_of_temp_min)
-                                                 
-        # find delta_ml for the smallest thetas and add to dictionary.
-        # but only do it if goes within the checks (sometimes doesn't)
-        if theta_min != np.inf:
-            delta_ml = self.delta_ml_calc(theta_min)
+                min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
 
-            close_df = self.add_to_close(close_df, self.bd.bd.object_name, theta_min, delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min)
+                # if theta is small enough for an event
+                if thetas[min_index] < self.theta_max:
+                    delta_ml = self.delta_ml_calc(temp_theta_min)
 
-        # now to find smallest sep in df or if lower than theta_max
-        # find indices real quick
-        if len(close_df) != 0:
-            indices = [i for i, x in enumerate(close_df.sep) if x < self.theta_max]
-            """
-            # get rows
-            if len(indices) != 0:
-                close_df = close_df.iloc[indices,:]
+                    # grab values
+                    bd_ra = self.coord_df['ra'][min_index]
+                    bd_dec = self.coord_df['dec'][min_index]
 
-            else:
-                index = list(close_df.sep).index(min(close_df.sep))
+                    ls_id = list(self.stars.ls_id)[i]
 
-                close_df = close_df.loc[index]
-            """
-        
+                    bs_ra = list(self.stars.ra)[i]
+                    bs_dec = list(self.stars.dec)[i]
+
+                    mag = list(self.stars.dered_mag_g)[i]
+                    time_of_min = self.coord_df['time'][min_index]
+
+                    # add to table
+                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, thetas[min_index], delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min)
+
         return close_df
-    
+
     ##
     # Name: plot_event_path
     #
