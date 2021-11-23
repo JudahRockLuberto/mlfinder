@@ -171,10 +171,11 @@ class FindEvents():
         close_df = pd.DataFrame(columns=['object_name', 'sep', 'delta_m', 'bd_ra', 'bd_dec', 'ls_id', 'bs_ra', 'bs_dec', 'mag', 'time_of_min'])
         
         # find "box" where events may possibly occur. this is the maximum distance for an event added on to each end
-        a_low = self.a_ends[0] - (self.theta_max / (3600 * 1000))
-        a_high = self.a_ends[1] + (self.theta_max / (3600 * 1000))
-        d_low = self.d_ends[0] - (self.theta_max / (3600 * 1000))
-        d_high = self.d_ends[1] + (self.theta_max / (3600 * 1000))
+        # also convert theta_max from mas to deg
+        a_low = self.a_ends[0] - (self.theta_max / 3600)
+        a_high = self.a_ends[1] + (self.theta_max / 3600)
+        d_low = self.d_ends[0] - (self.theta_max / 3600)
+        d_high = self.d_ends[1] + (self.theta_max / 3600)
 
         print(self.theta_max)
         print(a_low, self.a_ends[0])
