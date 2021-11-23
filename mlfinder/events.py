@@ -198,7 +198,7 @@ class FindEvents():
 
                 # if theta is small enough for an event
                 if thetas[min_index] < self.theta_max:
-                    delta_ml = self.delta_ml_calc(temp_theta_min)
+                    delta_ml = self.delta_ml_calc(thetas[min_index])
 
                     # grab values
                     bd_ra = self.coord_df['ra'][min_index]
