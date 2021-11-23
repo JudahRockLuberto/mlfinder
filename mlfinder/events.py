@@ -177,12 +177,6 @@ class FindEvents():
         d_low = self.d_ends[0] - (self.theta_max / 3600)
         d_high = self.d_ends[1] + (self.theta_max / 3600)
 
-        print(self.theta_max)
-        print(a_low, self.a_ends[0])
-        print(a_high, self.a_ends[1])
-        print(d_low, self.d_ends[0])
-        print(d_high, self.d_ends[1])
-
         # run through each background star
         for i in range(len(self.stars)): 
             #if the star is within the range I am looking at
