@@ -187,6 +187,8 @@ class FindEvents():
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
 
             if a_check and d_check:
+                print('here!')
+                
                 thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], list(self.stars.ra)[i], list(self.stars.dec)[i]) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
