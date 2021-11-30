@@ -6,6 +6,7 @@ import astropy
 from astropy.table import Table
 
 # imports from datalab (installation: https://datalab.noao.edu/docs/manual/UsingTheNOAODataLab/InstallDatalab/InstallDatalab.html)
+import dl
 from dl import queryClient as qc
 from dl.helpers.utils import convert
 
