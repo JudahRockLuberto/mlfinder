@@ -39,8 +39,10 @@ class Fields():
             
         else:
             raise Exception('Brown Dwarf data needs to either be ra/dec, an astropy table or pandas table of the dwarf data, or the brown dwarf class.')
-            
+        
         # now to grab the star info
+        dl.queryClient.getClient(profile='default', svc_url='https://datalab.noirlab.edu/query')
+        
         if file == None:
             q = """SELECT
                         ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_duplicated_source, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
