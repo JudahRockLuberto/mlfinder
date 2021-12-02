@@ -187,13 +187,14 @@ class FindEvents():
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
 
             if a_check and d_check:
-                print('here!')
                 
                 thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], list(self.stars.ra)[i], list(self.stars.dec)[i]) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
-
+                
+                print('theta min:', thetas[min_index], 'theta max:', self.theta_max)
+                
                 # if theta is small enough for an event
                 if thetas[min_index] < self.theta_max:
                     delta_ml = self.delta_ml_calc(thetas[min_index])
