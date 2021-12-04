@@ -60,9 +60,9 @@ class Fields():
         
         self.stars = self.filter_stars_only(self.stars)
         self.stars = self.filter_stars_mag(self.stars)
-     
-    #def grab_stars():
-    #    return None
+
+        # create array of paths for each star
+        self.star_paths = np.zeros(len(self.stars))
 
     ##
     # Name: filter_stars_only
