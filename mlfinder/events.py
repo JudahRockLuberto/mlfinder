@@ -193,7 +193,7 @@ class FindEvents():
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
                 
-                print(row)
+                print(self.stars.iloc[i])
                 print('theta min:', thetas[min_index], 'theta max:', self.theta_max)
                 
                 # if theta is small enough for an event
