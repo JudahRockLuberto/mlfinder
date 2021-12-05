@@ -193,6 +193,7 @@ class FindEvents():
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
                 
+                print(row)
                 print('theta min:', thetas[min_index], 'theta max:', self.theta_max)
                 
                 # if theta is small enough for an event
@@ -444,15 +445,6 @@ class FindEvents():
         if ntick_y is not None:
             ax1.xaxis.set_major_locator(MaxNLocator(ntick_x))
         
-        # lines for centroid shift plot
-        """
-        ax1.axvline(2021.7479)
-        ax1.axvline(2022.7452)
-        
-        ax1.axvspan(2020.5325119780969, 2020.6830937713892, color='red', alpha=0.3)
-        ax1.axvspan(2021.5345653661875, 2021.68514715948, color='red', alpha=0.3)
-        """
-
         # add an arbitrary number of shifts after interpolating
         colors = ['#003f5c', '#7a5195', '#ef5675', '#ffa600']
 
