@@ -41,6 +41,8 @@ class Fields():
             self.ra = bd.ra
             self.dec = bd.dec
             
+            self.bd = bd
+            
         else:
             raise Exception('Brown Dwarf data needs to either be ra/dec, an astropy table or pandas table of the dwarf data, or the brown dwarf class.')
         
