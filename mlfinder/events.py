@@ -207,7 +207,8 @@ class FindEvents():
                     ras = list(self.stars.ra)[i]
                     decs = list(self.stars.dec)[i]
                 
-                
+                print(ras)
+                print(type(ras))
                 thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras, decs) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
