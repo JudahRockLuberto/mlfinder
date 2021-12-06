@@ -132,6 +132,7 @@ class Fields():
         decals_data = convert(res,'pandas')
 
         # use gaia id to get info about it
+        print(decals_data.id2)
         query = """SELECT 
                     source_id, ra, ra_error, dec, dec_error, parallax, pmra, pmra_error, pmdec, pmdec_error
                 FROM 
