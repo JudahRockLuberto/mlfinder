@@ -187,8 +187,28 @@ class FindEvents():
             d_check = (abs(d_high - list(self.stars.dec)[i]) + abs(list(self.stars.dec)[i] - d_low)) == abs(d_high - d_low)
 
             if a_check and d_check:
+                # if within check, see if there is gaia data on the star
+                gaia_data = self.fields.get_gaia_data(index=i)
                 
-                thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], list(self.stars.ra)[i], list(self.stars.dec)[i]) for index, row in self.coord_df.iterrows()])
+                # grab paths or position (if no gaia data)
+                if len(gaia_data) == 1:
+                    # grab actual data
+                    parallax = 0 if len(a.parallax) == 0 or np.isnan(a.parallax).bool() else a.parallax
+                    mu_a = 0 if len(a.pma) == 0 or np.isnan(a.pma).bool() else a.pma
+                    mu_d = 0 if len(a.pmd) == 0 or np.isnan(a.pmd).bool() else a.pmd
+                    
+                    # compute path as needed
+                    star_path = find_star_path(i, parallax, mu_a, mu_d, self.bd.start, self.bd.stop)
+                    
+                    ras = star_path.ra
+                    decs = star_path.dec
+                    
+                else:
+                    ras = list(self.stars.ra)[i]
+                    decs = list(self.stars.dec)[i]
+                
+                
+                thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras, decs) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
