@@ -119,7 +119,7 @@ class Fields():
         # get data about star
         row = self.stars.iloc[index]
         ls_id = row.ls_id
-
+        print(ls_id)
         # get gaia id of star from decals
         q = """SELECT
                 ra1, dec1, id1, ra2, dec2, id2, distance
