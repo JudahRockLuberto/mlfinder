@@ -203,12 +203,14 @@ class FindEvents():
                     ras = list(star_path.ra)
                     decs = list(star_path.dec)
                     
+                    thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras[index], decs[index]) for index, row in self.coord_df.iterrows()])
+                    
                 else:
                     ras = list(self.stars.ra)[i]
                     decs = list(self.stars.dec)[i]
+                    
+                    thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras, decs) for index, row in self.coord_df.iterrows()])
                 
-                
-                thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras[index], decs[index]) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
