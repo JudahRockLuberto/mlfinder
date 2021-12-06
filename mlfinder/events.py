@@ -200,15 +200,14 @@ class FindEvents():
                     # compute path as needed
                     star_path = self.fields.find_star_path(i, parallax, mu_a, mu_d, self.bd.start, self.bd.end)
                     
-                    ras = star_path.ra
-                    decs = star_path.dec
+                    ras = list(star_path.ra)
+                    decs = list(star_path.dec)
                     
                 else:
                     ras = list(self.stars.ra)[i]
                     decs = list(self.stars.dec)[i]
                 
-                print(ras)
-                print(type(ras))
+
                 thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras, decs) for index, row in self.coord_df.iterrows()])
                 thetas *= 3600 # deg to arcseconds
 
