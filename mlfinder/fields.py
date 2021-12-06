@@ -115,7 +115,7 @@ class Fields():
     #
     # purpose: if the star isn't in gaia, it is far enough away to not have motion,
     #          but this will find if the background star is in gaia (and need to calc motion)
-    def find_star_path(self, index):
+    def get_gaia_data(self, index):
         # get data about star
         row = self.stars.iloc[index]
         ls_id = row.ls_id
