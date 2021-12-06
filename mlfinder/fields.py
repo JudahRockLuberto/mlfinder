@@ -119,7 +119,7 @@ class Fields():
         # get data about star
         row = self.stars.iloc[index]
         ls_id = row.ls_id
-        print(ls_id)
+
         # get gaia id of star from decals
         q = """SELECT
                 ra1, dec1, id1, ra2, dec2, id2, distance
@@ -131,14 +131,16 @@ class Fields():
         res = qc.query(sql=q)
         decals_data = convert(res,'pandas')
 
+        # get gaia id (or input id = 0 if no gaia data)
+        gaia_id = 0 if len(decals_data.id2) == 0 else decals_data.id2
+            
         # use gaia id to get info about it
-        print(decals_data.id2)
         query = """SELECT 
                     source_id, ra, ra_error, dec, dec_error, parallax, pmra, pmra_error, pmdec, pmdec_error
                 FROM 
                     gaiadr2.gaia_source
                 WHERE 
-                    source_id = {} """.format(decals_data.id2)
+                    source_id = {} """.format(gaia_id)
 
         gaia_data = Gaia.launch_job(query).get_results().to_pandas()
 
