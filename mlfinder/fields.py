@@ -8,6 +8,7 @@ import pandas as pd
 import astropy
 from astropy.table import Table
 from astropy.coordinates import SkyCoord
+from astropy.time import Time
 
 from astroquery.gaia import Gaia
 
