@@ -167,10 +167,10 @@ class Fields():
         # make inputted times into jd -- note that t_split is temp, so i reuse for the observed date and the start date
 
         # initial time
-        if type(self.observ_date) == float:
-            t_0 = self.observ_date
+        if type(self.bd.observ_date) == float:
+            t_0 = self.bd.observ_date
         else:
-            t_split = self.observ_date.split('-')
+            t_split = self.bd.observ_date.split('-')
             t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
 
         # start time
@@ -182,7 +182,7 @@ class Fields():
 
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
-                       epochs={'start':self.observ_date, 'stop':end,
+                       epochs={'start':self.bd.observ_date, 'stop':end,
                                'step':step})
 
         vectors = obj.vectors()
