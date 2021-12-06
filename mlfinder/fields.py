@@ -11,6 +11,8 @@ from astropy.coordinates import SkyCoord
 
 from astroquery.gaia import Gaia
 
+from astroquery.jplhorizons import Horizons
+
 # imports from datalab (installation: https://datalab.noao.edu/docs/manual/UsingTheNOAODataLab/InstallDatalab/InstallDatalab.html)
 import dl
 from dl import queryClient as qc
