@@ -158,11 +158,11 @@ class Fields():
         coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
         #first need to pull general data on star and convert to arcseconds
-        a_0 = self.stars.ra[index] * 3600
-        d_0 = self.stars.dec[index] * 3600
+        a_0 = list(self.stars.ra)[index] * 3600
+        d_0 = list(self.stars.dec)[index] * 3600
 
-        mu_a = self.mu_a / 1000
-        mu_d = self.mu_d / 1000
+        mu_a = mu_a / 1000
+        mu_d = mu_d / 1000
 
         # make inputted times into jd -- note that t_split is temp, so i reuse for the observed date and the start date
 
