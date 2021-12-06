@@ -193,9 +193,9 @@ class FindEvents():
                 # grab paths or position (if no gaia data)
                 if len(gaia_data) == 1:
                     # grab actual data
-                    parallax = 0 if len(a.parallax) == 0 or np.isnan(a.parallax).bool() else a.parallax
-                    mu_a = 0 if len(a.pma) == 0 or np.isnan(a.pma).bool() else a.pma
-                    mu_d = 0 if len(a.pmd) == 0 or np.isnan(a.pmd).bool() else a.pmd
+                    parallax = 0 if len(gata_data.parallax) == 0 or np.isnan(gata_data.parallax).bool() else gata_data.parallax
+                    mu_a = 0 if len(gata_data.pma) == 0 or np.isnan(gata_data.pma).bool() else gata_data.pma
+                    mu_d = 0 if len(gata_data.pmd) == 0 or np.isnan(gata_data.pmd).bool() else gata_data.pmd
                     
                     # compute path as needed
                     star_path = find_star_path(i, parallax, mu_a, mu_d, self.bd.start, self.bd.stop)
