@@ -161,7 +161,7 @@ class Fields():
     # outputs: path of that star
     #
     # purpose: find the path of a particular star
-    def find_star_path(self, index, parallax, mu_a, mu_d, start, end, step='1month'):
+    def find_star_path(self, index, pi_trig, mu_a, mu_d, start, end, step='1month'):
         # creating an empty pandas dataframe bc easiest to work with
         coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
