@@ -50,6 +50,8 @@ class FindEvents():
         self.a_ends = [self.coord_df.ra[0], self.coord_df.ra[len(self.coord_df.ra) - 1]]
         self.d_ends = [self.coord_df.dec[0], self.coord_df.dec[len(self.coord_df.dec) - 1]]
         
+        self.min_sep = np.nan
+        
         # finding events
         self.event_table = self.find_events()
     
