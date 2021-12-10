@@ -149,7 +149,7 @@ class Fields():
                     gaiadr2.gaia_source
                 WHERE 
                     source_id = {} """.format(int(gaia_id))
-        print(gaia_id)
+        
         gaia_data = Gaia.launch_job(query).get_results().to_pandas()
 
         return gaia_data
