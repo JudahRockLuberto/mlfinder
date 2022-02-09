@@ -157,6 +157,7 @@ class BrownDwarf():
 
         # put to BrownDwarf too
         self.coord_df = coord_df
+        print(coord_df)
         
         # add step, start, end because used for plotting in FindEvents()
         self.step = step
