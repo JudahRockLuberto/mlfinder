@@ -155,7 +155,7 @@ class BrownDwarf():
             if t > t_start:
                 df_to_concat = pd.DataFrame({'time': t, 'ra': a_t, 'dec': d_t})
                 
-                coord_df = pd.concat([coord_df, df_to_conat], ignore_index=True)
+                coord_df = pd.concat([coord_df, df_to_conat], verify_integrity=True)
 
         # put to BrownDwarf too
         self.coord_df = coord_df
