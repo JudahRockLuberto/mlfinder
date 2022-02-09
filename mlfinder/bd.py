@@ -153,8 +153,7 @@ class BrownDwarf():
 
             #add to the coord dataframe,  but only if during or after when we want the start
             if t > t_start:
-                df_to_concat = pd.DataFrame({'time': t, 'ra': a_t, 'dec': d_t})
-                print(coord_df.columns)
+                df_to_concat = pd.DataFrame({'time': [t], 'ra': [a_t], 'dec': [d_t]})
                 coord_df = pd.concat([coord_df, df_to_conat], verify_integrity=True)
 
         # put to BrownDwarf too
