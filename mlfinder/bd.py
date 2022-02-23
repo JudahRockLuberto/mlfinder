@@ -110,14 +110,14 @@ class BrownDwarf():
             t_0 = self.observ_date
         else:
             t_split = self.observ_date.split('-')
-            t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+            t_0 = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon - 1 / 12) + (float(t_split[2]) - 1 / 365) #when observations happened
 
         # start time
         if type(start) == float:
             t_start = start
         else:
             t_split = start.split('-')
-            t_start = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon / 12) + (float(t_split[2]) / 365) #when observations happened
+            t_start = float(t_split[0]) + (strptime(t_split[1],'%b').tm_mon - 1 / 12) + (float(t_split[2]) - 1 / 365) #when observations happened
 
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
