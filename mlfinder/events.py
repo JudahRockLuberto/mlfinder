@@ -348,7 +348,6 @@ class FindEvents():
     #          by linearly interpolating the centroid shift to each day, not month
     #
     def interpolate_shift(self, shift, time):
-        print(time)
         r = np.linspace(min(time), max(time), 365 * (max(time) - min(time)))
 
         interp_shift = interp1d(time,
