@@ -214,6 +214,7 @@ class FindEvents():
                     thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras, decs) for index, row in self.coord_df.iterrows()])
                 
                 thetas *= 3600 # deg to arcseconds
+                self.thetas = thetas
 
                 min_index = np.where(thetas == min(thetas))[0][0] # assuming 1 moment of minimum separation
                 
