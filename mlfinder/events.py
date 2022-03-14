@@ -205,13 +205,6 @@ class FindEvents():
                     ras = list(star_path.ra)
                     decs = list(star_path.dec)
                     
-                    print('star path length', len(star_path.ra))
-                    print('coord_df length', len(self.coord_df))
-                    print(index)
-                    print(ras)
-                    print(decs)
-                    print(ras[index])
-                    print(decs[index])
                     thetas = np.array([pyasl.getAngDist(row['ra'], row['dec'], ras[index], decs[index]) for index, row in self.coord_df.iterrows()])
                     
                 else:
