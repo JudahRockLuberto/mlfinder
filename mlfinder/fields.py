@@ -151,7 +151,6 @@ class Fields():
                     source_id = {} """.format(int(gaia_id))
         
         gaia_data = Gaia.launch_job(query).get_results().to_pandas()
-        print(gaia_data['ra_error'], gaia_data['dec_error'])
 
         return gaia_data
     
