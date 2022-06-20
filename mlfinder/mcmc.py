@@ -93,9 +93,6 @@ class MonteCarlo():
             mass_unc_list.append(delta_ml)
             
             sep_list.append(min_separation)
-            
-            if i % 10 == 0:
-                print(i)
         
         self.mass_unc_list = mass_unc_list
         return mass_unc_list, sep_list
