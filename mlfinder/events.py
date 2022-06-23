@@ -190,6 +190,7 @@ class FindEvents():
 
             if a_check and d_check:
                 # if within check, see if there is gaia data on the star
+                print(i)
                 gaia_data = self.fields.get_gaia_data(index=i)
                 
                 # grab paths or position (if no gaia data)
