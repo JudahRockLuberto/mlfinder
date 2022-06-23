@@ -148,7 +148,7 @@ class Fields():
                 FROM 
                     gaiadr2.gaia_source
                 WHERE 
-                    source_id = {} """.format(gaia_id.item())
+                    source_id = {} """.format(int(gaia_id))
         
         gaia_data = Gaia.launch_job(query).get_results().to_pandas()
 
