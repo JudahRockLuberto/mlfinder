@@ -200,7 +200,7 @@ class FindEvents():
                     mu_d = 0 if len(gaia_data.pmdec) == 0 or np.isnan(gaia_data.pmdec).bool() else gaia_data.pmdec
                     
                     # compute path as needed
-                    star_path = self.fields.find_star_path(i, parallax, mu_a, mu_d, self.bd.start, self.bd.end)
+                    star_path = self.fields.find_star_path(i, parallax, mu_a, mu_d, self.bd.start, self.bd.end, step=self.bd.step)
                     
                     ras = list(star_path.ra)
                     decs = list(star_path.dec)
