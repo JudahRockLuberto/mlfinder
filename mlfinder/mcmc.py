@@ -97,7 +97,7 @@ class MonteCarlo():
             
             sep_list.append(min_separation)
             
-            time_list.append(bd_path.time[index])
+            time_list.append(bd_path.time[min_index])
         
         self.mass_unc_list = mass_unc_list
         return mass_unc_list, sep_list, time_list
