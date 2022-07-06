@@ -92,6 +92,8 @@ class BrownDwarf():
     #
     # purpose: function to grab the path of the brown dwarf with specified years
     def find_path(self, start, end, step='1month'):
+        test_time = time.time()
+        
         # creating an empty pandas dataframe bc easiest to work with
         coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
@@ -127,6 +129,8 @@ class BrownDwarf():
         vectors = obj.vectors()
         vectors = vectors['targetname', 'datetime_jd', 'x', 'y', 'z']
 
+        print('beginning', time.time() - test_time)
+        test_time = time.time()
         #run through each ephemeride coordinate/time (time as months)
         for coord in vectors:
             #converting coord to year
@@ -155,6 +159,7 @@ class BrownDwarf():
             if t > t_start:
                 coord_df = coord_df.append({'time': t, 'ra': a_t, 'dec': d_t}, ignore_index=True)
 
+        print('end', time.time() - test_time)
         # put to BrownDwarf too
         self.coord_df = coord_df
         
