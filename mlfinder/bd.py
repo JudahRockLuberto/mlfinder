@@ -92,8 +92,6 @@ class BrownDwarf():
     #
     # purpose: function to grab the path of the brown dwarf with specified years
     def find_path(self, start, end, step='1month'):
-        test_time = time.time()
-        
         # creating an empty pandas dataframe bc easiest to work with
         coord_df = pd.DataFrame(columns=['time', 'ra', 'dec'])
 
@@ -158,8 +156,7 @@ class BrownDwarf():
         a_ts = a_ts / 3600
         d_ts = d_ts / 3600
 
-        print('end', time.time() - test_time)
-
+        # add to coord df
         coord_df['time'] = times
         coord_df['ra'] = a_ts
         coord_df['dec'] = d_ts
