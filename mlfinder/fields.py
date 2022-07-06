@@ -196,34 +196,37 @@ class Fields():
         vectors = obj.vectors()
         vectors = vectors['targetname', 'datetime_jd', 'x', 'y', 'z']
 
-        #run through each ephemeride coordinate/time (time as months)
+        times = list()
         for coord in vectors:
-            #converting coord to year
+            # converting coord to year
             t = Time(float(coord[1]), format='jd')
             t.format = 'jyear'
             t = t.value
 
-            #cue formula for ra and dec at a given time.
-            d_prime = d_0 + (mu_d * (t - t_0))
+            times.append(t)
 
-            #converting d to rad
-            d_prime_r = float(d_prime / 206265)
+        # grab individual vectors
+        coord_x = vectors['x']
+        coord_y = vectors['y']
+        coord_z = vectors['z']
 
-            a_prime = a_0 + (mu_a * (t - t_0) / (np.cos(d_prime_r)))
+        # calculate positions in array
+        d_primes = np.array([d_0 + (mu_d * (i - t_0))  for i in times])
+        d_primes_r = d_primes / 206265
 
-            #convert a to rad
-            a_prime_r = float(a_prime / 206265)
+        a_primes = np.array([a_0 + (mu_a * (times[i] - t_0) / (np.cos(d_primes_r[i]))) for i in range(len(times))])
+        a_primes_r = a_primes / 206265
 
-            # actual equations
-            a_t = a_prime + ((pi_trig * ((coord[2] * np.sin(a_prime_r)) - (coord[3] * np.cos(a_prime_r))) / np.cos(d_prime_r)))
-            d_t = d_prime + (pi_trig * ((coord[2] * np.cos(a_prime_r) * np.sin(d_prime_r)) + (coord[3] * np.sin(a_prime_r) * np.sin(d_prime_r)) - (coord[4] * np.cos(d_prime_r))))
+        a_ts = np.array([a_primes[i] + ((pi_trig * ((coord_x[i] * np.sin(a_primes_r[i])) - (coord_y[i] * np.cos(a_primes_r[i]))) / np.cos(d_primes_r[i]))) for i in range(len(times))])
+        d_ts = np.array([d_primes[i] + (pi_trig * ((coord_x[i] * np.cos(a_primes_r[i]) * np.sin(d_primes_r[i])) + (coord_y[i] * np.sin(a_primes_r[i]) * np.sin(d_primes_r[i])) - (coord_z[i] * np.cos(d_primes_r[i])))) for i in range(len(times))])
 
-            #convert a_t and d_t to degrees
-            a_t = a_t / 3600
-            d_t = d_t / 3600
+        #convert a_t and d_t to degrees  
+        a_ts = a_ts / 3600
+        d_ts = d_ts / 3600
 
-            #add to the coord dataframe,  but only if during or after when we want the start
-            if t > t_start:
-                coord_df = coord_df.append({'time': t, 'ra': a_t, 'dec': d_t}, ignore_index=True)
+        # add to coord df
+        coord_df['time'] = times
+        coord_df['ra'] = a_ts
+        coord_df['dec'] = d_ts
 
         return coord_df
