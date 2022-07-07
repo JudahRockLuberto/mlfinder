@@ -137,6 +137,8 @@ class BrownDwarf():
 
             times.append(t)
             
+        times = np.array(times)
+            
         # grab individual vectors
         coord_x = np.array(vectors['x'])
         coord_y = np.array(vectors['y'])
