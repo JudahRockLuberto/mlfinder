@@ -136,21 +136,21 @@ class BrownDwarf():
             t = t.value
 
             times.append(t)
-
+            
         # grab individual vectors
-        coord_x = vectors['x']
-        coord_y = vectors['y']
-        coord_z = vectors['z']
+        coord_x = np.array(vectors['x'])
+        coord_y = np.array(vectors['y'])
+        coord_z = np.array(vectors['z'])
 
-        # calculate positions in array
-        d_primes = np.array([d_0 + (mu_d * (i - t_0))  for i in times])
+        # get positions throughout time
+        d_primes = d_0 + (mu_d * (times - t_0))
         d_primes_r = d_primes / 206265
 
-        a_primes = np.array([a_0 + (mu_a * (times[i] - t_0) / (np.cos(d_primes_r[i]))) for i in range(len(times))])
+        a_primes = a_0 + (mu_a * (times - t_0) / (np.cos(d_primes_r)))
         a_primes_r = a_primes / 206265
-
-        a_ts = np.array([a_primes[i] + ((pi_trig * ((coord_x[i] * np.sin(a_primes_r[i])) - (coord_y[i] * np.cos(a_primes_r[i]))) / np.cos(d_primes_r[i]))) for i in range(len(times))])
-        d_ts = np.array([d_primes[i] + (pi_trig * ((coord_x[i] * np.cos(a_primes_r[i]) * np.sin(d_primes_r[i])) + (coord_y[i] * np.sin(a_primes_r[i]) * np.sin(d_primes_r[i])) - (coord_z[i] * np.cos(d_primes_r[i])))) for i in range(len(times))])
+        
+        a_ts = a_primes + ((pi_trig * ((coord_x * np.sin(a_primes_r)) - (coord_y * np.cos(a_primes_r))) / np.cos(d_primes_r)))
+        d_ts = d_primes + (pi_trig * ((coord_x * np.cos(a_primes_r) * np.sin(d_primes_r)) + (coord_y * np.sin(a_primes_r) * np.sin(d_primes_r)) - (coord_z * np.cos(d_primes_r))))
 
         #convert a_t and d_t to degrees  
         a_ts = a_ts / 3600
