@@ -72,13 +72,13 @@ class MonteCarlo():
                      'mu_delta': [self.bd.mu_d, self.bd.pm_mu_d]}
         
         # add data to a list for ease
-        all_data = [np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data]
+        all_data = np.array([np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data])
         
         # run through each sample and get the measurement uncertainty
         mass_unc_list, sep_list, time_list = list(), list(), list()
         for i in range(self.samples):
             # grab data if needs to be indexed or not
-            instance_data = [j[i] if isinstance(j, np.ndarray) else j for j in all_data]
+            instance_data = np.array([j[i] if isinstance(j, np.ndarray) else j for j in all_data])
             
             # create a BrownDwarf instance
             bd_new = BrownDwarf(np.array([instance_data[0], instance_data[1], instance_data[2], instance_data[3], instance_data[4]]), observ_date=self.bd.observ_date, array_col_names=['ra', 'dec', 'pi', 'mu_alpha', 'mu_delta'])
