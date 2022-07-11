@@ -17,7 +17,7 @@ from mlfinder.bd import BrownDwarf
 from mlfinder.fields import Fields
 
 class MonteCarlo():
-    def __init__(self, bd, vary, event_table, which=0, samples=1000, prints=None):
+    def __init__(self, bd, vary, event_table, which=0, samples=1000):
         # check if bd and fields are classes
         if not isinstance(bd, BrownDwarf):
             raise Exception('Brown dwarf must be an instance of the BrownDwarf() class.')
@@ -61,7 +61,7 @@ class MonteCarlo():
     # outputs: a list of mass uncertainties
     #
     # purpose: see probability of good measurements of brown dwarfs with markov chain monte carlo
-    def sampler(self):
+    def sampler(self, prints=None):
         # get "new" data for brown dwarf
         
         # grab random samples of whichever is in self.vary
