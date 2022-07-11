@@ -75,7 +75,7 @@ class MonteCarlo():
         all_data = np.array([np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data])
         
         # run through each sample and get the measurement uncertainty
-        mass_unc_list, sep_list, time_list = list(), list(), list()
+        mass_unc_list, sep_list, time_list, index_list = list(), list(), list(), list()
         for i in range(self.samples):
             # print as needed
             if prints is not None:
@@ -96,6 +96,7 @@ class MonteCarlo():
             min_separation = min(separations)
             
             min_index = separations.index(min_separation)
+            index_list.append(min_index)
             
             delta_ml = self.delta_ml_calc(min_separation)
             mass_unc_list.append(delta_ml)
@@ -105,4 +106,4 @@ class MonteCarlo():
             time_list.append(bd_path.time[min_index])
         
         self.mass_unc_list = mass_unc_list
-        return mass_unc_list, sep_list, time_list
+        return mass_unc_list, sep_list, time_list, index_list
