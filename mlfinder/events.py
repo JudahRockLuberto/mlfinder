@@ -584,11 +584,11 @@ class FindEvents():
     #
     # purpose: find the possibility of events
     #
-    def event_mcmc(self, vary, which=0, samples=1000):
+    def event_mcmc(self, vary, which=0, samples=1000, prints=None):
         # create instance
         mcmc = MonteCarlo(self.bd, vary, self.event_table, which, samples)
         
         # find mass uncertainties
-        uncertainties, separations, times, indexes = mcmc.sampler()
+        uncertainties, separations, times, indexes = mcmc.sampler(prints=prints)
         
         return uncertainties, separations, times, indexes
