@@ -17,7 +17,7 @@ from mlfinder.bd import BrownDwarf
 from mlfinder.fields import Fields
 
 class MonteCarlo():
-    def __init__(self, bd, vary, event_table, which=0, samples=1000):
+    def __init__(self, bd, vary, event_table, which=0, samples=1000, prints=None):
         # check if bd and fields are classes
         if not isinstance(bd, BrownDwarf):
             raise Exception('Brown dwarf must be an instance of the BrownDwarf() class.')
@@ -77,6 +77,11 @@ class MonteCarlo():
         # run through each sample and get the measurement uncertainty
         mass_unc_list, sep_list, time_list = list(), list(), list()
         for i in range(self.samples):
+            # print as needed
+            if prints is not None:
+                if i % prints == 0:
+                    print('Working on sample #{}...'.format(i))
+            
             # grab data if needs to be indexed or not
             instance_data = np.array([j[i] if isinstance(j, np.ndarray) else j for j in all_data])
             
