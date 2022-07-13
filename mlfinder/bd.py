@@ -121,7 +121,7 @@ class BrownDwarf():
 
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
-                       epochs={'start':self.observ_date, 'stop':end,
+                       epochs={'start':start, 'stop':end,
                                'step':step})
 
         vectors = obj.vectors()
