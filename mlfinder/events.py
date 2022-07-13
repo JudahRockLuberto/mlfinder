@@ -144,7 +144,7 @@ class FindEvents():
     #
     # purpose: to add rows to self.close_dict. there are two cases where i want to add (smallest theta after going through all the stars
     #          and if theta < theta_min)
-    def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min):
+    def add_to_close(self, close_df, object_name, sep, delta_m, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min, gaia_id):
         # set up dictionary and add to df
         value_dict = {'object_name': object_name,
                       'sep': sep,
@@ -155,7 +155,8 @@ class FindEvents():
                       'bs_ra': bs_ra,
                       'bs_dec': bs_dec,
                       'mag': mag,
-                      'time_of_min': time_of_min
+                      'time_of_min': time_of_min,
+                      'gaia_id': gaia_id
                      }
 
         return close_df.append(value_dict, ignore_index=True)
@@ -235,9 +236,17 @@ class FindEvents():
 
                     mag = list(self.stars.dered_mag_g)[i]
                     time_of_min = self.coord_df['time'][min_index]
-
+                    
+                    # gaia data
+                    if len(gaia_data) == 1:
+                        # get id
+                        gaia_id = gaia_data.source_id
+                    else:
+                        # is NaN
+                        gaia_id = np.nan
+                
                     # add to table
-                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, thetas[min_index], delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min)
+                    close_df = self.add_to_close(close_df, self.bd.bd.object_name, thetas[min_index], delta_ml, bd_ra, bd_dec, ls_id, bs_ra, bs_dec, mag, time_of_min, gaia_id)
 
         return close_df
 
