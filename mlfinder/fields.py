@@ -190,7 +190,7 @@ class Fields():
 
         # grab ephemerides in vector form
         obj = Horizons(id='399', id_type='majorbody',
-                       epochs={'start':self.bd.observ_date, 'stop':end,
+                       epochs={'start':self.bd.start, 'stop':end,
                                'step':step})
 
         vectors = obj.vectors()
