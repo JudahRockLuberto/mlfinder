@@ -240,7 +240,7 @@ class FindEvents():
                     # gaia data
                     if len(gaia_data) == 1:
                         # get id
-                        gaia_id = gaia_data.source_id
+                        gaia_id = gaia_data.source_id.item()
                     else:
                         # is NaN
                         gaia_id = np.nan
