@@ -132,7 +132,7 @@ class Fields():
         q = """SELECT
                 ra1, dec1, id1, ra2, dec2, id2, distance
             FROM
-                ls_dr9.x1p5__tractor__gaia_edr3__gaia_source
+                ls_dr9.x1p5__tractor__gaia_dr3__gaia_source
             WHERE 
                 id1 = {} """.format(ls_id)
 
