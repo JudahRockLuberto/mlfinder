@@ -74,6 +74,9 @@ class MonteCarlo():
         # add data to a list for ease
         all_data = np.array([np.random.normal(loc=vary_data[i][0], scale=vary_data[i][1], size=self.samples) if i in self.vary else vary_data[i][0] for i in vary_data])
         
+        # TEMP
+        self.all_data = all_data
+        
         # run through each sample and get the measurement uncertainty
         mass_unc_list, sep_list, time_list, index_list = list(), list(), list(), list()
         for i in range(self.samples):
