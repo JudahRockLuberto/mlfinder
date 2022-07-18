@@ -600,4 +600,7 @@ class FindEvents():
         # find mass uncertainties
         uncertainties, separations, times, indexes = mcmc.sampler(prints=prints)
         
+        # TEMP
+        self.all_data = mcmc.all_data
+        
         return uncertainties, separations, times, indexes
