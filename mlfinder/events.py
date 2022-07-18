@@ -598,9 +598,9 @@ class FindEvents():
         mcmc = MonteCarlo(self.bd, vary, self.event_table, which, samples)
         
         # find mass uncertainties
-        uncertainties, separations, times, indexes = mcmc.sampler(prints=prints)
+        uncertainties, separations, times, indices = mcmc.sampler(prints=prints)
         
         # TEMP
         self.all_data = mcmc.all_data
         
-        return uncertainties, separations, times, indexes
+        return uncertainties, separations, times, indices
