@@ -59,7 +59,7 @@ class Fields():
             q = """SELECT
                         ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_phot_g_mean_mag, gaia_duplicated_source, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
                     FROM
-                        ls_dr9.tractor
+                        ls_dr8.tractor
                     WHERE
                         't' = Q3C_RADIAL_QUERY(ra, dec,  {} , {} ,  ({}/60)) """.format(float(self.ra), float(self.dec), float(self.n_arcmin))
             res = qc.query(sql=q)
@@ -132,7 +132,7 @@ class Fields():
         q = """SELECT
                 ra1, dec1, id1, ra2, dec2, id2, distance
             FROM
-                ls_dr8.x1p5__tractor__gaia_dr3__gaia_source
+                ls_dr9.x1p5__tractor__gaia_dr3__gaia_source
             WHERE 
                 id1 = {} """.format(ls_id)
 
