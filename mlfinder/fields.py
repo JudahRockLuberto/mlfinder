@@ -58,7 +58,7 @@ class Fields():
         if isinstance(stars_df, (Table, pd.DataFrame)):
             self.stars = pd.DataFrame(stars_df)
         
-        if file == None and df == None:
+        if file == None and stars_df == None:
             q = """SELECT
                         ls_id, ra, dec,  dered_mag_g, dered_mag_r, dered_mag_w1, dered_mag_w2, dered_mag_w3, dered_mag_w4, dered_mag_z, gaia_phot_g_mean_mag, gaia_duplicated_source, pmdec, pmra, psfsize_g, psfsize_r, psfsize_z, ref_cat, ref_epoch, ref_id, type
                     FROM
