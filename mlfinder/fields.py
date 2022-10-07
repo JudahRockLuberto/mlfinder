@@ -24,7 +24,7 @@ from mlfinder.bd import BrownDwarf
 
 # class for the fields (potentially either many or one)
 class Fields():
-    def __init__(self, file=None, df=None, ra = None, dec = None, bd = None, n_arcmin=5):
+    def __init__(self, file=None, stars_df=None, ra = None, dec = None, bd = None, n_arcmin=5):
         self.n_arcmin = n_arcmin
         
         # brown dwarf can be ra/dec or data or class
@@ -55,8 +55,8 @@ class Fields():
         # now to grab the star info
         dl.queryClient.getClient(profile='default', svc_url='https://datalab.noirlab.edu/query')
         
-        if df != None:
-            self.stars = pd.DataFrame(df)
+        if isinstance(stars_df, (Table, pd.DataFrame)):
+            self.stars = pd.DataFrame(stars_df)
         
         if file == None and df == None:
             q = """SELECT
