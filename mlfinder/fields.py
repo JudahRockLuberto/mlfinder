@@ -24,7 +24,7 @@ from mlfinder.bd import BrownDwarf
 
 # class for the fields (potentially either many or one)
 class Fields():
-    def __init__(self, file=None, ra = None, dec = None, bd = None, n_arcmin=5):
+    def __init__(self, file = None, ra = None, dec = None, bd = None, n_arcmin=5):
         self.n_arcmin = n_arcmin
         
         # brown dwarf can be ra/dec or data or class
