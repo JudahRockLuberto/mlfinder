@@ -3,7 +3,7 @@ Files associated with Luberto et al (2022).
 Bd_microlensing_check.ipynb is a notebook showing the creation of browndwarfs.txt
 Browndwarfs.txt is a file of all the brown dwarfs used, their astrometry, and our findings.
 Nielson_check.ipynb is a notebook showing the results of running the code through Nielson and Bramich's findings.
-Nielson_results.txt is a file showing the results of nielson_check.ipynb
+Nielson_results.txt is a file showing the predicted events from nielson_check.ipynb
 
 Note: The method for creating browndwarfs.txt, shown in bd_microlensing_check.ipynb is shown manually,
       but was done automatically with astropy's functional capabilities.
