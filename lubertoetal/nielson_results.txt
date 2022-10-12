@@ -1,3 +1,21 @@
+
+Title: A Search for Predicted Astrometric Microlensing Events by Nearby Brown Dwarfs 
+Authors: Luberto J., Martin E., McGill P., Leauthaud A., Skemer A., Lu J. 
+Table: Catalog of Results from Nielson & Bramich
+================================================================================
+Byte-by-byte Description of file: nielson_results.txt
+--------------------------------------------------------------------------------
+ Bytes Format Units  Label     Explanations
+--------------------------------------------------------------------------------
+  1- 25  A25    ---    object_name     Name of Object       
+ 27- 40  A14    mag    J_bd            J magnitude of brown dwarf     
+ 42- 59  A18    mag    G_bs            G magnitude of background star (Gaia)     
+ 61- 80  A20    yrs    t_min           Time of minimum separation    
+ 82- 99  A18    mas    Sep_min         Minimum Separation
+101-116  A16    Mjup   Delta_m         Predicted Mass Uncertainty    
+--------------------------------------------------------------------------------
+Notes: Errors in each column denoted by $\pm$
+--------------------------------------------------------------------------------
 LSR_J0011+5908            9.95$\pm$0.02  20.131$\pm$0.0061  2032.717$\pm$0.0163  900.97$\pm$52.08   213.97$\pm$12.37
 PSO_J076.7092+52.6087     15.75$\pm$0.07 18.694$\pm$0.0028  2044.7501$\pm$0.5043 99.12$\pm$83.51    43.01$\pm$36.23 
 WISEA_J053257.29+041842.5 15.44$\pm$0.06 17.4666$\pm$0.0014 2052.5565$\pm$0.1201 90.39$\pm$58.87    73.5$\pm$47.87  
