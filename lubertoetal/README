@@ -5,5 +5,4 @@ Browndwarfs.txt is a file of all the brown dwarfs used, their astrometry, and ou
 Nielson_check.ipynb is a notebook showing the results of running the code through Nielson and Bramich's findings.
 Nielson_results.txt is a file showing the predicted events from nielson_check.ipynb
 
-Note: The method for creating browndwarfs.txt, shown in bd_microlensing_check.ipynb is shown manually,
-      but was done automatically with astropy's functional capabilities.
+Note: Nielson_results.txt columns are character strings because each column includes the errors in it already.
